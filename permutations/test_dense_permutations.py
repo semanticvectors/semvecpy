@@ -11,6 +11,7 @@ Migrate tests to np.testing, as this will in general deal with floating
 point issues.
 """
 
+
 class TestPermutations(unittest.TestCase):
     def test_normalize(self):
         vector = np.asarray([1, 1, 1, 1], dtype=np.float32)

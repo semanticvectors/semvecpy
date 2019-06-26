@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import numpy as np
 
-import permutations as p
+import sparse_permutations as p
 
 
 class TestPermutations(TestCase):
