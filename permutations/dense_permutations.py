@@ -72,11 +72,13 @@ def permutation_to_matrix(permutation):
     return perm_matrix
 
 
-def cosine_distance(vector1, vector2):
+def cosine_similarity(vector1, vector2):
+    vector1 = vector1.astype(np.float64)
+    vector2 = vector2.astype(np.float64)
     norm1 = np.sqrt(np.dot(vector1,vector1))
     norm2 = np.sqrt(np.dot(vector2, vector2))
-    cosine_similarity = np.dot(vector1, vector2) / (norm1*norm2) # value between -1 and 1
-    return (cosine_similarity + 1)/2 # scale to 0 to 1
+    _cosine_similarity = np.dot(vector1, vector2) / (norm1*norm2) # value between -1 and 1
+    return ((_cosine_similarity + 1)/2).astype(np.float32) # scale to 0 to 1
 
 def main():
     vector1 = get_random_vector(DIMENSION)
