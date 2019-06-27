@@ -1,7 +1,11 @@
-"""Experiments in permuting and matching dense vectors."""
+"""Experiments in permuting and matching dense vectors.
+
+There are some overlaps and some differences with sparse_permutations.py, we haven't attempted to unify these.
+"""
 import numpy as np
 
-DIMENSION = 50
+import constants as c
+
 
 def get_random_vector(dimension):
     """
@@ -19,7 +23,6 @@ def normalize(vector):
     See test_dense_permutations.py test case difference.
     """   
     return vector / np.sqrt(np.dot(vector, vector))
-
 
 
 def get_sort_permutation(vector):
@@ -46,7 +49,7 @@ def permute_vector(permutation, vector):
     Returns the result of applying the given permutation to the given vector.
     Input permutation and vector should be of the same length.
     Input permutation should be an index vector (e.g. a permutation of
-    the integers from 0 to dimenion-1 of the vector)
+    the integers from 0 to dimension-1 of the vector)
     """
     return vector[permutation]
 
@@ -55,7 +58,7 @@ def inverse_permutation(permutation):
     """
     Returns the inverse of a given permutation.
     Input permutation should be an index vector (e.g. a permutation of
-    the integers from 0 to dimenion-1 of the vector). Note that for this
+    the integers from 0 to dimension-1 of the vector). Note that for this
     inverse to work, each number in the range should occur exactly once
     (i.e. is a true index vector).
     """
@@ -80,10 +83,11 @@ def cosine_similarity(vector1, vector2):
     _cosine_similarity = np.dot(vector1, vector2) / (norm1*norm2) # value between -1 and 1
     return ((_cosine_similarity + 1)/2).astype(np.float32) # scale to 0 to 1
 
+
 def main():
-    vector1 = get_random_vector(DIMENSION)
+    vector1 = get_random_vector(c.DIMENSION)
     normalized_vector1 = normalize(vector1)
-    vector2 = get_random_vector(DIMENSION)
+    vector2 = get_random_vector(c.DIMENSION)
     normalized_vector2 = normalize(vector2)
     print('')
     print('Normalized or not, values should be the same (give or take a rounding error).')
@@ -102,8 +106,8 @@ def main():
     print(f"Similarity after sorting, normalized: {cosine_distance(norm_perm_vector1, norm_perm_vector2):.4f}")
     print('\n')
 
-    randompermvec = get_random_permutation(DIMENSION)
-    randompermvec2 = get_random_permutation(DIMENSION)
+    randompermvec = get_random_permutation(c.DIMENSION)
+    randompermvec2 = get_random_permutation(c.DIMENSION)
     rperm_vector1 = permute_vector(randompermvec, vector1)
     rperm_vector2 = permute_vector(randompermvec, vector2)
     rnorm_perm_vector1 = permute_vector(randompermvec, normalized_vector1)

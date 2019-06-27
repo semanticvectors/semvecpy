@@ -1,15 +1,17 @@
-"""Experiments in permuting and matching sparse vectors."""
+"""Experiments in permuting and matching sparse vectors.
+
+There are some overlaps and some differences with dense_permutations.py, we haven't attempted to unify these.
+"""
 import math
 import numpy as np
 import random
 
-from typing import Dict, Iterable, List, Tuple
+from typing import Iterable, List, Tuple
 
-DIMENSION = 10
-ENTRIES = 2
+import constants as c
 
 
-def get_random_vector(dim: int, entries: int) -> np.array:
+def get_random_sparse_vector(dim: int, entries: int) -> np.array:
     new_vector = np.zeros(dim)
     populated_entries = 0
     while populated_entries < entries:
@@ -63,9 +65,9 @@ def permutation_to_matrix(perm: List[int]) -> np.array:
 
 
 def main():
-    vector1 = get_random_vector(DIMENSION, ENTRIES)
+    vector1 = get_random_sparse_vector(c.DIMENSION, c.SEED_ENTRIES)
     normalize(vector1)
-    vector2 = get_random_vector(DIMENSION, ENTRIES)
+    vector2 = get_random_sparse_vector(c.DIMENSION, c.SEED_ENTRIES)
     normalize(vector2)
     print("Similarity before sorting:", sum(vector1 * vector2))
     perm_vector1 = permute_vector(get_sort_permutation(vector1), vector1)
