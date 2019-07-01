@@ -8,7 +8,7 @@ import random
 
 from typing import Iterable, List, Tuple
 
-import constants as c
+import permutations.constants as c
 
 
 def get_random_sparse_vector(dim: int, entries: int) -> np.array:

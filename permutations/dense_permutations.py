@@ -4,7 +4,7 @@ There are some overlaps and some differences with sparse_permutations.py, we hav
 """
 import numpy as np
 
-import constants as c
+import permutations.constants as c
 
 
 def get_random_vector(dimension):
