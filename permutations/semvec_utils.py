@@ -17,11 +17,12 @@ def getvector(wordvecs,term):
         return None
 
 def get_k_vec_neighbors(vectors, query_term, k):
-    """Returns the nearest neighboring terms to query_vec."""
+    """Returns the nearest neighboring terms to query_term - a term."""
     query_vec = getvector(vectors,query_term)
     return get_k_neighbors(vectors, query_vec, k)
 
 def get_k_neighbors(vectors, query_vec, k):
+    """Returns the nearest neighboring terms to query_vec - a real vector"""
     results=[]
     sims = np.matmul(vectors[1], query_vec)
     indices = np.argpartition(sims, -k)[-k:]
@@ -33,6 +34,7 @@ def get_k_neighbors(vectors, query_vec, k):
 
 
 def get_k_bvec_neighbors(bwordvectors, query_term, k):
+    """Returns the nearest neighboring terms (binary vector reps) to query_term - a term"""
     if query_term in bwordvectors[0]:
         query_index = bwordvectors[0].index(query_term)
         query_vec = bwordvectors[1][query_index]
@@ -42,7 +44,7 @@ def get_k_bvec_neighbors(bwordvectors, query_term, k):
 
 
 def get_k_b_neighbors(bwordvectors, query_vec, k):
-    # """Returns the indices into the given array of vectors of the nearest neighbors to query_vec."""
+     """Returns the nearest neighboring to terms to query_vec - a binary vector."""
     sims = []
     for vector in bwordvectors[1]:
         vec2 = copy.copy(vector)
@@ -57,6 +59,7 @@ def get_k_b_neighbors(bwordvectors, query_vec, k):
 
 
 def readfile(fileName):
+    """Read in a Semantic Vectors binary (.bin) file - currently works for real vector, binary vector and permutation stores"""
     words = []
     vectors = []
 
