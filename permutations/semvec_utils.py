@@ -44,7 +44,7 @@ def get_k_bvec_neighbors(bwordvectors, query_term, k):
 
 
 def get_k_b_neighbors(bwordvectors, query_vec, k):
-     """Returns the nearest neighboring to terms to query_vec - a binary vector."""
+    """Returns the nearest neighboring to terms to query_vec - a binary vector."""
     sims = []
     for vector in bwordvectors[1]:
         vec2 = copy.copy(vector)
