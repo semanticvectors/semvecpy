@@ -102,7 +102,7 @@ def readfile(fileName):
             # print('y',y)
             # skip the bit we have just read
             ct = ct + 1
-            print((fileContent[ct + 1:ct + y + 1].decode()))
+            #print((fileContent[ct + 1:ct + y + 1].decode()))
 
         words.append(fileContent[ct + 1:ct + y + 1].decode())
         ct = ct + y + 1
