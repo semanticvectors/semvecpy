@@ -75,7 +75,7 @@ def readfile(fileName):
     dindex = header.index('-dimension')
     dimension = int(header[dindex + 1])
     unitsize = 4  # bytes per vector dimension
-    print(dimension, " ", vectortype)
+    #print(dimension, " ", vectortype)
     if vectortype == 'REAL':
         dimstring = '>' + str(dimension) + 'f'
     elif vectortype == 'PERMUTATION':
