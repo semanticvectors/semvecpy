@@ -64,61 +64,57 @@ def readfile(fileName):
     vectors = []
 
     with open(fileName, mode='rb') as file:  # b is important -> binary
-        fileContent = file.read()
+        fileContent = file.read(1)
 
-    # determine length of header string (the first byte)
-    x = fileContent[0]
-    ct = x + 1
-    header = fileContent[1:ct].decode().split(" ")
-    vindex = header.index('-vectortype')
-    vectortype = header[vindex + 1]
-    dindex = header.index('-dimension')
-    dimension = int(header[dindex + 1])
-    unitsize = 4  # bytes per vector dimension
-    #print(dimension, " ", vectortype)
-    if vectortype == 'REAL':
-        dimstring = '>' + str(dimension) + 'f'
-    elif vectortype == 'PERMUTATION':
-        dimstring = '>' + str(dimension) + 'i'
-    elif vectortype == 'BINARY':
-        unitsize = .125
+        # determine length of header string (the first byte)
+        x = fileContent
+        ct = int.from_bytes(x, byteorder='little', signed=False)
+        fileContent = file.read(ct)
+        header = fileContent.decode().split(" ")
+        vindex = header.index('-vectortype')
+        vectortype = header[vindex + 1]
+        dindex = header.index('-dimension')
+        dimension = int(header[dindex + 1])
+        unitsize = 4  # bytes per vector dimension
+        print(dimension, " ", vectortype)
+        if vectortype == 'REAL':
+            dimstring = '>' + str(dimension) + 'f'
+        elif vectortype == 'PERMUTATION':
+            dimstring = '>' + str(dimension) + 'i'
+        elif vectortype == 'BINARY':
+            unitsize = .125
 
-    skipcount = 0
-    count = 0
+        skipcount = 0
+        count = 0
 
-    while (ct < len(fileContent)):
-        y = int.from_bytes(fileContent[ct:ct + 1], byteorder='little', signed=False)
+        fileContent = file.read(1)
+        while fileContent:
+            # y = int.from_bytes(fileContent[ct:ct + 1], byteorder='little', signed=False)
 
-        # Read Lucene's vInt - if the most significant bit
-        # is set, read another byte as significant bits
-        # ahead of the seven remaining bits of the original byte
-        # Confused? - see vInt at https://lucene.apache.org/core/3_5_0/fileformats.html
+            # Read Lucene's vInt - if the most significant bit
+            # is set, read another byte as significant bits
+            # ahead of the seven remaining bits of the original byte
+            # Confused? - see vInt at https://lucene.apache.org/core/3_5_0/fileformats.html
 
-        binstring1 = format(y, "b")
-        if len(binstring1) == 8:
-            y2 = int.from_bytes(fileContent[ct + 1:ct + 2], byteorder='little', signed=False)
-            binstring2 = format(y2, "b")
-            y = int(binstring2 + binstring1[1:], 2)
-            # print('y',y)
-            # skip the bit we have just read
-            ct = ct + 1
-            #print((fileContent[ct + 1:ct + y + 1].decode()))
+            y = int.from_bytes(fileContent, byteorder='little', signed=False)
+            binstring1 = format(y, "b")
+            if len(binstring1) == 8:
+                fileContent = file.read(1)
+                y2 = int.from_bytes(fileContent, byteorder='little', signed=False)
+                binstring2 = format(y2, "b")
+                y = int(binstring2 + binstring1[1:], 2)
 
-        words.append(fileContent[ct + 1:ct + y + 1].decode())
-        ct = ct + y + 1
-        if vectortype == 'BINARY':
-            v = int.from_bytes(fileContent[ct:ct + int(unitsize * dimension)], byteorder='little', signed=False)
-            binv = format(v, "b")
-            toadd = dimension - len(binv)
-            binv = str(0) * toadd + binv
-            q = BitArray(bin=binv)
-        else:
-            q = struct.unpack(dimstring, fileContent[ct:ct + int(unitsize * dimension)])
+            fileContent = file.read(y)
+            words.append(fileContent.decode())
+            fileContent = file.read(int(unitsize * dimension))
 
-        vectors.append(q)
+            if vectortype == 'BINARY':
+                q = BitArray(fileContent)
+            else:
+                q = struct.unpack(dimstring, fileContent)
 
-        ct = ct + int(dimension * unitsize)
-        count = count + 1
+            vectors.append(q)
+            fileContent = file.read(1)
 
     return (words, vectors)
 
