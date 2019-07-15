@@ -47,9 +47,9 @@ def get_k_b_neighbors(bwordvectors, query_vec, k):
     """Returns the nearest neighboring to terms to query_vec - a binary vector."""
     sims = []
     for vector in bwordvectors[1]:
-        vector ^= query_vec
-        sims.append(-vector.bin.count("1"))
-        vector ^= query_vec
+        vec2 = copy.copy(vector)
+        vec2 ^= query_vec
+        sims.append(-vec2.bin.count("1"))
     indices = np.argpartition(sims, -k)[-k:]
     indices = sorted(indices, key=lambda i: sims[i], reverse=True)
     labels = []
