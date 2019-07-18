@@ -1,0 +1,756 @@
+Andorra	Capital	Andorra la Vella
+Andorra	Continent	EU
+Andorra	CurrencyName	Euro
+United Arab Emirates	Capital	Abu Dhabi
+United Arab Emirates	Continent	AS
+United Arab Emirates	CurrencyName	Dirham
+Afghanistan	Capital	Kabul
+Afghanistan	Continent	AS
+Afghanistan	CurrencyName	Afghani
+Antigua and Barbuda	Capital	St. John's
+Antigua and Barbuda	Continent	NA
+Antigua and Barbuda	CurrencyName	Dollar
+Anguilla	Capital	The Valley
+Anguilla	Continent	NA
+Anguilla	CurrencyName	Dollar
+Albania	Capital	Tirana
+Albania	Continent	EU
+Albania	CurrencyName	Lek
+Armenia	Capital	Yerevan
+Armenia	Continent	AS
+Armenia	CurrencyName	Dram
+Angola	Capital	Luanda
+Angola	Continent	AF
+Angola	CurrencyName	Kwanza
+Antarctica	Capital	NONE
+Antarctica	Continent	AN
+Antarctica	CurrencyName	NONE
+Argentina	Capital	Buenos Aires
+Argentina	Continent	SA
+Argentina	CurrencyName	Peso
+American Samoa	Capital	Pago Pago
+American Samoa	Continent	OC
+American Samoa	CurrencyName	Dollar
+Austria	Capital	Vienna
+Austria	Continent	EU
+Austria	CurrencyName	Euro
+Australia	Capital	Canberra
+Australia	Continent	OC
+Australia	CurrencyName	Dollar
+Aruba	Capital	Oranjestad
+Aruba	Continent	NA
+Aruba	CurrencyName	Guilder
+Aland Islands	Capital	Mariehamn
+Aland Islands	Continent	EU
+Aland Islands	CurrencyName	Euro
+Azerbaijan	Capital	Baku
+Azerbaijan	Continent	AS
+Azerbaijan	CurrencyName	Manat
+Bosnia and Herzegovina	Capital	Sarajevo
+Bosnia and Herzegovina	Continent	EU
+Bosnia and Herzegovina	CurrencyName	Marka
+Barbados	Capital	Bridgetown
+Barbados	Continent	NA
+Barbados	CurrencyName	Dollar
+Bangladesh	Capital	Dhaka
+Bangladesh	Continent	AS
+Bangladesh	CurrencyName	Taka
+Belgium	Capital	Brussels
+Belgium	Continent	EU
+Belgium	CurrencyName	Euro
+Burkina Faso	Capital	Ouagadougou
+Burkina Faso	Continent	AF
+Burkina Faso	CurrencyName	Franc
+Bulgaria	Capital	Sofia
+Bulgaria	Continent	EU
+Bulgaria	CurrencyName	Lev
+Bahrain	Capital	Manama
+Bahrain	Continent	AS
+Bahrain	CurrencyName	Dinar
+Burundi	Capital	Bujumbura
+Burundi	Continent	AF
+Burundi	CurrencyName	Franc
+Benin	Capital	Porto-Novo
+Benin	Continent	AF
+Benin	CurrencyName	Franc
+Saint Barthelemy	Capital	Gustavia
+Saint Barthelemy	Continent	NA
+Saint Barthelemy	CurrencyName	Euro
+Bermuda	Capital	Hamilton
+Bermuda	Continent	NA
+Bermuda	CurrencyName	Dollar
+Brunei	Capital	Bandar Seri Begawan
+Brunei	Continent	AS
+Brunei	CurrencyName	Dollar
+Bolivia	Capital	Sucre
+Bolivia	Continent	SA
+Bolivia	CurrencyName	Boliviano
+Bonaire, Saint Eustatius and Saba 	Capital	NONE
+Bonaire, Saint Eustatius and Saba 	Continent	NA
+Bonaire, Saint Eustatius and Saba 	CurrencyName	Dollar
+Brazil	Capital	Brasilia
+Brazil	Continent	SA
+Brazil	CurrencyName	Real
+Bahamas	Capital	Nassau
+Bahamas	Continent	NA
+Bahamas	CurrencyName	Dollar
+Bhutan	Capital	Thimphu
+Bhutan	Continent	AS
+Bhutan	CurrencyName	Ngultrum
+Bouvet Island	Capital	NONE
+Bouvet Island	Continent	AN
+Bouvet Island	CurrencyName	Krone
+Botswana	Capital	Gaborone
+Botswana	Continent	AF
+Botswana	CurrencyName	Pula
+Belarus	Capital	Minsk
+Belarus	Continent	EU
+Belarus	CurrencyName	Belarusian ruble
+Belize	Capital	Belmopan
+Belize	Continent	NA
+Belize	CurrencyName	Dollar
+Canada	Capital	Ottawa
+Canada	Continent	NA
+Canada	CurrencyName	Dollar
+Cocos Islands	Capital	West Island
+Cocos Islands	Continent	AS
+Cocos Islands	CurrencyName	Dollar
+Democratic Republic of the Congo	Capital	Kinshasa
+Democratic Republic of the Congo	Continent	AF
+Democratic Republic of the Congo	CurrencyName	Franc
+Central African Republic	Capital	Bangui
+Central African Republic	Continent	AF
+Central African Republic	CurrencyName	Franc
+Republic of the Congo	Capital	Brazzaville
+Republic of the Congo	Continent	AF
+Republic of the Congo	CurrencyName	Franc
+Switzerland	Capital	Bern
+Switzerland	Continent	EU
+Switzerland	CurrencyName	Franc
+Ivory Coast	Capital	Yamoussoukro
+Ivory Coast	Continent	AF
+Ivory Coast	CurrencyName	Franc
+Cook Islands	Capital	Avarua
+Cook Islands	Continent	OC
+Cook Islands	CurrencyName	Dollar
+Chile	Capital	Santiago
+Chile	Continent	SA
+Chile	CurrencyName	Peso
+Cameroon	Capital	Yaounde
+Cameroon	Continent	AF
+Cameroon	CurrencyName	Franc
+China	Capital	Beijing
+China	Continent	AS
+China	CurrencyName	Yuan Renminbi
+Colombia	Capital	Bogota
+Colombia	Continent	SA
+Colombia	CurrencyName	Peso
+Costa Rica	Capital	San Jose
+Costa Rica	Continent	NA
+Costa Rica	CurrencyName	Colon
+Cuba	Capital	Havana
+Cuba	Continent	NA
+Cuba	CurrencyName	Peso
+Cabo Verde	Capital	Praia
+Cabo Verde	Continent	AF
+Cabo Verde	CurrencyName	Escudo
+Curacao	Capital	 Willemstad
+Curacao	Continent	NA
+Curacao	CurrencyName	Guilder
+Christmas Island	Capital	Flying Fish Cove
+Christmas Island	Continent	OC
+Christmas Island	CurrencyName	Dollar
+Cyprus	Capital	Nicosia
+Cyprus	Continent	EU
+Cyprus	CurrencyName	Euro
+Czechia	Capital	Prague
+Czechia	Continent	EU
+Czechia	CurrencyName	Koruna
+Germany	Capital	Berlin
+Germany	Continent	EU
+Germany	CurrencyName	Euro
+Djibouti	Capital	Djibouti
+Djibouti	Continent	AF
+Djibouti	CurrencyName	Franc
+Denmark	Capital	Copenhagen
+Denmark	Continent	EU
+Denmark	CurrencyName	Krone
+Dominica	Capital	Roseau
+Dominica	Continent	NA
+Dominica	CurrencyName	Dollar
+Dominican Republic	Capital	Santo Domingo
+Dominican Republic	Continent	NA
+Dominican Republic	CurrencyName	Peso
+Algeria	Capital	Algiers
+Algeria	Continent	AF
+Algeria	CurrencyName	Dinar
+Ecuador	Capital	Quito
+Ecuador	Continent	SA
+Ecuador	CurrencyName	Dollar
+Estonia	Capital	Tallinn
+Estonia	Continent	EU
+Estonia	CurrencyName	Euro
+Egypt	Capital	Cairo
+Egypt	Continent	AF
+Egypt	CurrencyName	Pound
+Western Sahara	Capital	El-Aaiun
+Western Sahara	Continent	AF
+Western Sahara	CurrencyName	Dirham
+Eritrea	Capital	Asmara
+Eritrea	Continent	AF
+Eritrea	CurrencyName	Nakfa
+Spain	Capital	Madrid
+Spain	Continent	EU
+Spain	CurrencyName	Euro
+Ethiopia	Capital	Addis Ababa
+Ethiopia	Continent	AF
+Ethiopia	CurrencyName	Birr
+Finland	Capital	Helsinki
+Finland	Continent	EU
+Finland	CurrencyName	Euro
+Fiji	Capital	Suva
+Fiji	Continent	OC
+Fiji	CurrencyName	Dollar
+Falkland Islands	Capital	Stanley
+Falkland Islands	Continent	SA
+Falkland Islands	CurrencyName	Pound
+Micronesia	Capital	Palikir
+Micronesia	Continent	OC
+Micronesia	CurrencyName	Dollar
+Faroe Islands	Capital	Torshavn
+Faroe Islands	Continent	EU
+Faroe Islands	CurrencyName	Krone
+France	Capital	Paris
+France	Continent	EU
+France	CurrencyName	Euro
+Gabon	Capital	Libreville
+Gabon	Continent	AF
+Gabon	CurrencyName	Franc
+United Kingdom	Capital	London
+United Kingdom	Continent	EU
+United Kingdom	CurrencyName	Pound
+Grenada	Capital	St. George's
+Grenada	Continent	NA
+Grenada	CurrencyName	Dollar
+Georgia	Capital	Tbilisi
+Georgia	Continent	AS
+Georgia	CurrencyName	Lari
+French Guiana	Capital	Cayenne
+French Guiana	Continent	SA
+French Guiana	CurrencyName	Euro
+Guernsey	Capital	St Peter Port
+Guernsey	Continent	EU
+Guernsey	CurrencyName	Pound
+Ghana	Capital	Accra
+Ghana	Continent	AF
+Ghana	CurrencyName	Cedi
+Gibraltar	Capital	Gibraltar
+Gibraltar	Continent	EU
+Gibraltar	CurrencyName	Pound
+Greenland	Capital	Nuuk
+Greenland	Continent	NA
+Greenland	CurrencyName	Krone
+Gambia	Capital	Banjul
+Gambia	Continent	AF
+Gambia	CurrencyName	Dalasi
+Guinea	Capital	Conakry
+Guinea	Continent	AF
+Guinea	CurrencyName	Franc
+Guadeloupe	Capital	Basse-Terre
+Guadeloupe	Continent	NA
+Guadeloupe	CurrencyName	Euro
+Equatorial Guinea	Capital	Malabo
+Equatorial Guinea	Continent	AF
+Equatorial Guinea	CurrencyName	Franc
+Greece	Capital	Athens
+Greece	Continent	EU
+Greece	CurrencyName	Euro
+South Georgia and the South Sandwich Islands	Capital	Grytviken
+South Georgia and the South Sandwich Islands	Continent	AN
+South Georgia and the South Sandwich Islands	CurrencyName	Pound
+Guatemala	Capital	Guatemala City
+Guatemala	Continent	NA
+Guatemala	CurrencyName	Quetzal
+Guam	Capital	Hagatna
+Guam	Continent	OC
+Guam	CurrencyName	Dollar
+Guinea-Bissau	Capital	Bissau
+Guinea-Bissau	Continent	AF
+Guinea-Bissau	CurrencyName	Franc
+Guyana	Capital	Georgetown
+Guyana	Continent	SA
+Guyana	CurrencyName	Dollar
+Hong Kong	Capital	Hong Kong
+Hong Kong	Continent	AS
+Hong Kong	CurrencyName	Dollar
+Heard Island and McDonald Islands	Capital	NONE
+Heard Island and McDonald Islands	Continent	AN
+Heard Island and McDonald Islands	CurrencyName	Dollar
+Honduras	Capital	Tegucigalpa
+Honduras	Continent	NA
+Honduras	CurrencyName	Lempira
+Croatia	Capital	Zagreb
+Croatia	Continent	EU
+Croatia	CurrencyName	Kuna
+Haiti	Capital	Port-au-Prince
+Haiti	Continent	NA
+Haiti	CurrencyName	Gourde
+Hungary	Capital	Budapest
+Hungary	Continent	EU
+Hungary	CurrencyName	Forint
+Indonesia	Capital	Jakarta
+Indonesia	Continent	AS
+Indonesia	CurrencyName	Rupiah
+Ireland	Capital	Dublin
+Ireland	Continent	EU
+Ireland	CurrencyName	Euro
+Israel	Capital	Jerusalem
+Israel	Continent	AS
+Israel	CurrencyName	Shekel
+Isle of Man	Capital	Douglas
+Isle of Man	Continent	EU
+Isle of Man	CurrencyName	Pound
+India	Capital	New Delhi
+India	Continent	AS
+India	CurrencyName	Rupee
+British Indian Ocean Territory	Capital	Diego Garcia
+British Indian Ocean Territory	Continent	AS
+British Indian Ocean Territory	CurrencyName	Dollar
+Iraq	Capital	Baghdad
+Iraq	Continent	AS
+Iraq	CurrencyName	Dinar
+Iran	Capital	Tehran
+Iran	Continent	AS
+Iran	CurrencyName	Rial
+Iceland	Capital	Reykjavik
+Iceland	Continent	EU
+Iceland	CurrencyName	Krona
+Italy	Capital	Rome
+Italy	Continent	EU
+Italy	CurrencyName	Euro
+Jersey	Capital	Saint Helier
+Jersey	Continent	EU
+Jersey	CurrencyName	Pound
+Jamaica	Capital	Kingston
+Jamaica	Continent	NA
+Jamaica	CurrencyName	Dollar
+Jordan	Capital	Amman
+Jordan	Continent	AS
+Jordan	CurrencyName	Dinar
+Japan	Capital	Tokyo
+Japan	Continent	AS
+Japan	CurrencyName	Yen
+Kenya	Capital	Nairobi
+Kenya	Continent	AF
+Kenya	CurrencyName	Shilling
+Kyrgyzstan	Capital	Bishkek
+Kyrgyzstan	Continent	AS
+Kyrgyzstan	CurrencyName	Som
+Cambodia	Capital	Phnom Penh
+Cambodia	Continent	AS
+Cambodia	CurrencyName	Riels
+Kiribati	Capital	Tarawa
+Kiribati	Continent	OC
+Kiribati	CurrencyName	Dollar
+Comoros	Capital	Moroni
+Comoros	Continent	AF
+Comoros	CurrencyName	Franc
+Saint Kitts and Nevis	Capital	Basseterre
+Saint Kitts and Nevis	Continent	NA
+Saint Kitts and Nevis	CurrencyName	Dollar
+North Korea	Capital	Pyongyang
+North Korea	Continent	AS
+North Korea	CurrencyName	Won
+South Korea	Capital	Seoul
+South Korea	Continent	AS
+South Korea	CurrencyName	Won
+Kosovo	Capital	Pristina
+Kosovo	Continent	EU
+Kosovo	CurrencyName	Euro
+Kuwait	Capital	Kuwait City
+Kuwait	Continent	AS
+Kuwait	CurrencyName	Dinar
+Cayman Islands	Capital	George Town
+Cayman Islands	Continent	NA
+Cayman Islands	CurrencyName	Dollar
+Kazakhstan	Capital	Nur-Sultan
+Kazakhstan	Continent	AS
+Kazakhstan	CurrencyName	Tenge
+Laos	Capital	Vientiane
+Laos	Continent	AS
+Laos	CurrencyName	Kip
+Lebanon	Capital	Beirut
+Lebanon	Continent	AS
+Lebanon	CurrencyName	Pound
+Saint Lucia	Capital	Castries
+Saint Lucia	Continent	NA
+Saint Lucia	CurrencyName	Dollar
+Liechtenstein	Capital	Vaduz
+Liechtenstein	Continent	EU
+Liechtenstein	CurrencyName	Franc
+Sri Lanka	Capital	Colombo
+Sri Lanka	Continent	AS
+Sri Lanka	CurrencyName	Rupee
+Liberia	Capital	Monrovia
+Liberia	Continent	AF
+Liberia	CurrencyName	Dollar
+Lesotho	Capital	Maseru
+Lesotho	Continent	AF
+Lesotho	CurrencyName	Loti
+Lithuania	Capital	Vilnius
+Lithuania	Continent	EU
+Lithuania	CurrencyName	Euro
+Luxembourg	Capital	Luxembourg
+Luxembourg	Continent	EU
+Luxembourg	CurrencyName	Euro
+Latvia	Capital	Riga
+Latvia	Continent	EU
+Latvia	CurrencyName	Euro
+Libya	Capital	Tripoli
+Libya	Continent	AF
+Libya	CurrencyName	Dinar
+Morocco	Capital	Rabat
+Morocco	Continent	AF
+Morocco	CurrencyName	Dirham
+Monaco	Capital	Monaco
+Monaco	Continent	EU
+Monaco	CurrencyName	Euro
+Moldova	Capital	Chisinau
+Moldova	Continent	EU
+Moldova	CurrencyName	Leu
+Montenegro	Capital	Podgorica
+Montenegro	Continent	EU
+Montenegro	CurrencyName	Euro
+Saint Martin	Capital	Marigot
+Saint Martin	Continent	NA
+Saint Martin	CurrencyName	Euro
+Madagascar	Capital	Antananarivo
+Madagascar	Continent	AF
+Madagascar	CurrencyName	Ariary
+Marshall Islands	Capital	Majuro
+Marshall Islands	Continent	OC
+Marshall Islands	CurrencyName	Dollar
+North Macedonia	Capital	Skopje
+North Macedonia	Continent	EU
+North Macedonia	CurrencyName	Denar
+Mali	Capital	Bamako
+Mali	Continent	AF
+Mali	CurrencyName	Franc
+Myanmar	Capital	Nay Pyi Taw
+Myanmar	Continent	AS
+Myanmar	CurrencyName	Kyat
+Mongolia	Capital	Ulaanbaatar
+Mongolia	Continent	AS
+Mongolia	CurrencyName	Tugrik
+Macao	Capital	Macao
+Macao	Continent	AS
+Macao	CurrencyName	Pataca
+Northern Mariana Islands	Capital	Saipan
+Northern Mariana Islands	Continent	OC
+Northern Mariana Islands	CurrencyName	Dollar
+Martinique	Capital	Fort-de-France
+Martinique	Continent	NA
+Martinique	CurrencyName	Euro
+Mauritania	Capital	Nouakchott
+Mauritania	Continent	AF
+Mauritania	CurrencyName	Ouguiya
+Montserrat	Capital	Plymouth
+Montserrat	Continent	NA
+Montserrat	CurrencyName	Dollar
+Malta	Capital	Valletta
+Malta	Continent	EU
+Malta	CurrencyName	Euro
+Mauritius	Capital	Port Louis
+Mauritius	Continent	AF
+Mauritius	CurrencyName	Rupee
+Maldives	Capital	Male
+Maldives	Continent	AS
+Maldives	CurrencyName	Rufiyaa
+Malawi	Capital	Lilongwe
+Malawi	Continent	AF
+Malawi	CurrencyName	Kwacha
+Mexico	Capital	Mexico City
+Mexico	Continent	NA
+Mexico	CurrencyName	Peso
+Malaysia	Capital	Kuala Lumpur
+Malaysia	Continent	AS
+Malaysia	CurrencyName	Ringgit
+Mozambique	Capital	Maputo
+Mozambique	Continent	AF
+Mozambique	CurrencyName	Metical
+Namibia	Capital	Windhoek
+Namibia	Continent	AF
+Namibia	CurrencyName	Dollar
+New Caledonia	Capital	Noumea
+New Caledonia	Continent	OC
+New Caledonia	CurrencyName	Franc
+Niger	Capital	Niamey
+Niger	Continent	AF
+Niger	CurrencyName	Franc
+Norfolk Island	Capital	Kingston
+Norfolk Island	Continent	OC
+Norfolk Island	CurrencyName	Dollar
+Nigeria	Capital	Abuja
+Nigeria	Continent	AF
+Nigeria	CurrencyName	Naira
+Nicaragua	Capital	Managua
+Nicaragua	Continent	NA
+Nicaragua	CurrencyName	Cordoba
+Netherlands	Capital	Amsterdam
+Netherlands	Continent	EU
+Netherlands	CurrencyName	Euro
+Norway	Capital	Oslo
+Norway	Continent	EU
+Norway	CurrencyName	Krone
+Nepal	Capital	Kathmandu
+Nepal	Continent	AS
+Nepal	CurrencyName	Rupee
+Nauru	Capital	Yaren
+Nauru	Continent	OC
+Nauru	CurrencyName	Dollar
+Niue	Capital	Alofi
+Niue	Continent	OC
+Niue	CurrencyName	Dollar
+New Zealand	Capital	Wellington
+New Zealand	Continent	OC
+New Zealand	CurrencyName	Dollar
+Oman	Capital	Muscat
+Oman	Continent	AS
+Oman	CurrencyName	Rial
+Panama	Capital	Panama City
+Panama	Continent	NA
+Panama	CurrencyName	Balboa
+Peru	Capital	Lima
+Peru	Continent	SA
+Peru	CurrencyName	Sol
+French Polynesia	Capital	Papeete
+French Polynesia	Continent	OC
+French Polynesia	CurrencyName	Franc
+Papua New Guinea	Capital	Port Moresby
+Papua New Guinea	Continent	OC
+Papua New Guinea	CurrencyName	Kina
+Philippines	Capital	Manila
+Philippines	Continent	AS
+Philippines	CurrencyName	Peso
+Pakistan	Capital	Islamabad
+Pakistan	Continent	AS
+Pakistan	CurrencyName	Rupee
+Poland	Capital	Warsaw
+Poland	Continent	EU
+Poland	CurrencyName	Zloty
+Saint Pierre and Miquelon	Capital	Saint-Pierre
+Saint Pierre and Miquelon	Continent	NA
+Saint Pierre and Miquelon	CurrencyName	Euro
+Pitcairn	Capital	Adamstown
+Pitcairn	Continent	OC
+Pitcairn	CurrencyName	Dollar
+Puerto Rico	Capital	San Juan
+Puerto Rico	Continent	NA
+Puerto Rico	CurrencyName	Dollar
+Palestinian Territory	Capital	East Jerusalem
+Palestinian Territory	Continent	AS
+Palestinian Territory	CurrencyName	Shekel
+Portugal	Capital	Lisbon
+Portugal	Continent	EU
+Portugal	CurrencyName	Euro
+Palau	Capital	Melekeok
+Palau	Continent	OC
+Palau	CurrencyName	Dollar
+Paraguay	Capital	Asuncion
+Paraguay	Continent	SA
+Paraguay	CurrencyName	Guarani
+Qatar	Capital	Doha
+Qatar	Continent	AS
+Qatar	CurrencyName	Rial
+Reunion	Capital	Saint-Denis
+Reunion	Continent	AF
+Reunion	CurrencyName	Euro
+Romania	Capital	Bucharest
+Romania	Continent	EU
+Romania	CurrencyName	Leu
+Serbia	Capital	Belgrade
+Serbia	Continent	EU
+Serbia	CurrencyName	Dinar
+Russia	Capital	Moscow
+Russia	Continent	EU
+Russia	CurrencyName	Ruble
+Rwanda	Capital	Kigali
+Rwanda	Continent	AF
+Rwanda	CurrencyName	Franc
+Saudi Arabia	Capital	Riyadh
+Saudi Arabia	Continent	AS
+Saudi Arabia	CurrencyName	Rial
+Solomon Islands	Capital	Honiara
+Solomon Islands	Continent	OC
+Solomon Islands	CurrencyName	Dollar
+Seychelles	Capital	Victoria
+Seychelles	Continent	AF
+Seychelles	CurrencyName	Rupee
+Sudan	Capital	Khartoum
+Sudan	Continent	AF
+Sudan	CurrencyName	Pound
+South Sudan	Capital	Juba
+South Sudan	Continent	AF
+South Sudan	CurrencyName	Pound
+Sweden	Capital	Stockholm
+Sweden	Continent	EU
+Sweden	CurrencyName	Krona
+Singapore	Capital	Singapore
+Singapore	Continent	AS
+Singapore	CurrencyName	Dollar
+Saint Helena	Capital	Jamestown
+Saint Helena	Continent	AF
+Saint Helena	CurrencyName	Pound
+Slovenia	Capital	Ljubljana
+Slovenia	Continent	EU
+Slovenia	CurrencyName	Euro
+Svalbard and Jan Mayen	Capital	Longyearbyen
+Svalbard and Jan Mayen	Continent	EU
+Svalbard and Jan Mayen	CurrencyName	Krone
+Slovakia	Capital	Bratislava
+Slovakia	Continent	EU
+Slovakia	CurrencyName	Euro
+Sierra Leone	Capital	Freetown
+Sierra Leone	Continent	AF
+Sierra Leone	CurrencyName	Leone
+San Marino	Capital	San Marino
+San Marino	Continent	EU
+San Marino	CurrencyName	Euro
+Senegal	Capital	Dakar
+Senegal	Continent	AF
+Senegal	CurrencyName	Franc
+Somalia	Capital	Mogadishu
+Somalia	Continent	AF
+Somalia	CurrencyName	Shilling
+Suriname	Capital	Paramaribo
+Suriname	Continent	SA
+Suriname	CurrencyName	Dollar
+Sao Tome and Principe	Capital	Sao Tome
+Sao Tome and Principe	Continent	AF
+Sao Tome and Principe	CurrencyName	Dobra
+El Salvador	Capital	San Salvador
+El Salvador	Continent	NA
+El Salvador	CurrencyName	Dollar
+Sint Maarten	Capital	Philipsburg
+Sint Maarten	Continent	NA
+Sint Maarten	CurrencyName	Guilder
+Syria	Capital	Damascus
+Syria	Continent	AS
+Syria	CurrencyName	Pound
+Eswatini	Capital	Mbabane
+Eswatini	Continent	AF
+Eswatini	CurrencyName	Lilangeni
+Turks and Caicos Islands	Capital	Cockburn Town
+Turks and Caicos Islands	Continent	NA
+Turks and Caicos Islands	CurrencyName	Dollar
+Chad	Capital	N'Djamena
+Chad	Continent	AF
+Chad	CurrencyName	Franc
+French Southern Territories	Capital	Port-aux-Francais
+French Southern Territories	Continent	AN
+French Southern Territories	CurrencyName	Euro
+Togo	Capital	Lome
+Togo	Continent	AF
+Togo	CurrencyName	Franc
+Thailand	Capital	Bangkok
+Thailand	Continent	AS
+Thailand	CurrencyName	Baht
+Tajikistan	Capital	Dushanbe
+Tajikistan	Continent	AS
+Tajikistan	CurrencyName	Somoni
+Tokelau	Capital	NONE
+Tokelau	Continent	OC
+Tokelau	CurrencyName	Dollar
+Timor Leste	Capital	Dili
+Timor Leste	Continent	OC
+Timor Leste	CurrencyName	Dollar
+Turkmenistan	Capital	Ashgabat
+Turkmenistan	Continent	AS
+Turkmenistan	CurrencyName	Manat
+Tunisia	Capital	Tunis
+Tunisia	Continent	AF
+Tunisia	CurrencyName	Dinar
+Tonga	Capital	Nuku'alofa
+Tonga	Continent	OC
+Tonga	CurrencyName	Pa'anga
+Turkey	Capital	Ankara
+Turkey	Continent	AS
+Turkey	CurrencyName	Lira
+Trinidad and Tobago	Capital	Port of Spain
+Trinidad and Tobago	Continent	NA
+Trinidad and Tobago	CurrencyName	Dollar
+Tuvalu	Capital	Funafuti
+Tuvalu	Continent	OC
+Tuvalu	CurrencyName	Dollar
+Taiwan	Capital	Taipei
+Taiwan	Continent	AS
+Taiwan	CurrencyName	Dollar
+Tanzania	Capital	Dodoma
+Tanzania	Continent	AF
+Tanzania	CurrencyName	Shilling
+Ukraine	Capital	Kyiv
+Ukraine	Continent	EU
+Ukraine	CurrencyName	Hryvnia
+Uganda	Capital	Kampala
+Uganda	Continent	AF
+Uganda	CurrencyName	Shilling
+United States Minor Outlying Islands	Capital	NONE
+United States Minor Outlying Islands	Continent	OC
+United States Minor Outlying Islands	CurrencyName	Dollar
+United States	Capital	Washington
+United States	Continent	NA
+United States	CurrencyName	Dollar
+Uruguay	Capital	Montevideo
+Uruguay	Continent	SA
+Uruguay	CurrencyName	Peso
+Uzbekistan	Capital	Tashkent
+Uzbekistan	Continent	AS
+Uzbekistan	CurrencyName	Som
+Vatican	Capital	Vatican City
+Vatican	Continent	EU
+Vatican	CurrencyName	Euro
+Saint Vincent and the Grenadines	Capital	Kingstown
+Saint Vincent and the Grenadines	Continent	NA
+Saint Vincent and the Grenadines	CurrencyName	Dollar
+Venezuela	Capital	Caracas
+Venezuela	Continent	SA
+Venezuela	CurrencyName	Bolivar Soberano
+British Virgin Islands	Capital	Road Town
+British Virgin Islands	Continent	NA
+British Virgin Islands	CurrencyName	Dollar
+U.S. Virgin Islands	Capital	Charlotte Amalie
+U.S. Virgin Islands	Continent	NA
+U.S. Virgin Islands	CurrencyName	Dollar
+Vietnam	Capital	Hanoi
+Vietnam	Continent	AS
+Vietnam	CurrencyName	Dong
+Vanuatu	Capital	Port Vila
+Vanuatu	Continent	OC
+Vanuatu	CurrencyName	Vatu
+Wallis and Futuna	Capital	Mata Utu
+Wallis and Futuna	Continent	OC
+Wallis and Futuna	CurrencyName	Franc
+Samoa	Capital	Apia
+Samoa	Continent	OC
+Samoa	CurrencyName	Tala
+Yemen	Capital	Sanaa
+Yemen	Continent	AS
+Yemen	CurrencyName	Rial
+Mayotte	Capital	Mamoudzou
+Mayotte	Continent	AF
+Mayotte	CurrencyName	Euro
+South Africa	Capital	Pretoria
+South Africa	Continent	AF
+South Africa	CurrencyName	Rand
+Zambia	Capital	Lusaka
+Zambia	Continent	AF
+Zambia	CurrencyName	Kwacha
+Zimbabwe	Capital	Harare
+Zimbabwe	Continent	AF
+Zimbabwe	CurrencyName	Dollar
+Serbia and Montenegro	Capital	Belgrade
+Serbia and Montenegro	Continent	EU
+Serbia and Montenegro	CurrencyName	Dinar
+Netherlands Antilles	Capital	Willemstad
+Netherlands Antilles	Continent	NA
+Netherlands Antilles	CurrencyName	Guilder
