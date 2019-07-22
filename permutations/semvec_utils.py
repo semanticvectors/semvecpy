@@ -3,6 +3,7 @@
 import struct
 import copy
 import numpy as np
+from bitarray import bitarray
 from bitstring import BitArray
 
 def getvector(wordvecs,term):
@@ -49,7 +50,7 @@ def get_k_b_neighbors(bwordvectors, query_vec, k):
     for vector in bwordvectors[1]:
         vec2 = copy.copy(vector)
         vec2 ^= query_vec
-        sims.append(-vec2.bin.count("1"))
+        sims.append(-vec2.count(True))
     indices = np.argpartition(sims, -k)[-k:]
     indices = sorted(indices, key=lambda i: sims[i], reverse=True)
     labels = []
@@ -109,7 +110,8 @@ def readfile(fileName):
             fileContent = file.read(int(unitsize * dimension))
 
             if vectortype == 'BINARY':
-                q = BitArray(fileContent)
+                q=bitarray()
+                q.frombytes(fileContent)
             else:
                 q = struct.unpack(dimstring, fileContent)
 
@@ -118,3 +120,11 @@ def readfile(fileName):
 
     return (words, vectors)
 
+def main():
+    vecs=readfile('/users/tcohen1/ESP/quantumDisjunction/semanticvectors_1024.bin')
+    x=getvector(vecs,'docetaxel')
+    print(get_k_b_neighbors(vecs,x,10))
+
+
+if __name__ == '__main__':
+    main()
