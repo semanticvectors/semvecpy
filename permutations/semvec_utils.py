@@ -30,7 +30,7 @@ def get_k_neighbors(vectors, query_vec, k):
     indices = sorted(indices, key=lambda i: sims[i], reverse=True)
     for index in indices:
         label=vectors[0][index]
-        results.append(label)
+        results.append([sims[index],label])
     return results
 
 
@@ -50,13 +50,14 @@ def get_k_b_neighbors(bwordvectors, query_vec, k):
     for vector in bwordvectors[1]:
         vec2 = copy.copy(vector)
         vec2 ^= query_vec
-        sims.append(-vec2.count(True))
+        #.5 - normalized hamming distance
+        sims.append( 2*(.5*len(vec2)-vec2.count(True))/ len(vec2))
     indices = np.argpartition(sims, -k)[-k:]
     indices = sorted(indices, key=lambda i: sims[i], reverse=True)
-    labels = []
+    results = []
     for index in indices:
-        labels.append(bwordvectors[0][index])
-    return labels
+        results.append([sims[index],bwordvectors[0][index]])
+    return results
 
 
 def readfile(fileName):
