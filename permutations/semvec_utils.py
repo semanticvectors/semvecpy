@@ -120,11 +120,3 @@ def readfile(fileName):
 
     return (words, vectors)
 
-def main():
-    vecs=readfile('/users/tcohen1/ESP/quantumDisjunction/semanticvectors_1024.bin')
-    x=getvector(vecs,'docetaxel')
-    print(get_k_b_neighbors(vecs,x,10))
-
-
-if __name__ == '__main__':
-    main()
