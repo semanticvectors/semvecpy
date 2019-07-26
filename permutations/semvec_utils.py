@@ -2,6 +2,7 @@
 
 import struct
 import copy
+from typing import List
 import numpy as np
 from bitarray import bitarray
 
@@ -47,16 +48,132 @@ def get_k_b_neighbors(bwordvectors, query_vec, k):
     """Returns the nearest neighboring to terms to query_vec - a binary vector."""
     sims = []
     for vector in bwordvectors[1]:
-        vec2 = copy.copy(vector)
-        vec2 ^= query_vec
-        #.5 - normalized hamming distance
-        sims.append( 2*(.5*len(vec2)-vec2.count(True))/ len(vec2))
+        nnhd = measure_overlap(query_vec, vector)
+        sims.append(nnhd)
     indices = np.argpartition(sims, -k)[-k:]
     indices = sorted(indices, key=lambda i: sims[i], reverse=True)
     results = []
     for index in indices:
         results.append([sims[index],bwordvectors[0][index]])
     return results
+
+
+def compare_terms_batch(elemental_vectors, semantic_vectors, predicate_vectors, terms) -> List[float]:
+    """
+    Compares the terms in the specified list of term comparisons.
+    :param elemental_vectors:
+    :param semantic_vectors:
+    :param predicate_vectors:
+    :param terms: List of terms to compare. Each line should contain a single string containing exactly one pipe (|) character. Bound products (*) are allowed.
+    :return:
+    """
+    similarities = list()
+    for term in terms:
+        if term.count("|") is not 1:
+            raise ValueError("Input must contain exactly one | character per line")
+        term1, term2 = tuple(term.split("|"))
+        similarities.append(compare_terms(elemental_vectors, semantic_vectors, predicate_vectors, term1, term2))
+    return similarities
+
+
+def compare_terms(elemental_vectors, semantic_vectors, predicate_vectors,
+                  term1: str, term2: str, search_type: str = "boundproduct") -> float:
+    """
+    Look up the vector representations for the two given terms and determine the similarity between them.
+    :param elemental_vectors:
+    :param semantic_vectors:
+    :param predicate_vectors:
+    :param term1: First word or term for comparison.
+    :param term2: Second word or term for comparison
+    :param search_type: Search type. Currently, only boundproduct is supported.
+    :return: Similarity (normalized hamming distance) between the vectors for the two terms.
+    """
+    if search_type is not "boundproduct":
+        raise NotImplementedError()
+
+    return measure_overlap(
+        get_bound_product_query_vector_from_string(elemental_vectors, semantic_vectors, predicate_vectors, term1),
+        get_bound_product_query_vector_from_string(elemental_vectors, semantic_vectors, predicate_vectors, term2))
+
+
+def measure_overlap(vector1, vector2, binary: bool = True) -> float:
+    """
+    Returns the similarity (0.5-normalized hamming distance) between the two given vectors.
+    :param vector1: A vector
+    :param vector2: A vector
+    :param binary: True if the vectors to be compared are binary vectors.
+    :return: Similarity. Higher number means more similarity. 1.0 means the vectors are identical. Can be negative.
+    """
+    if not binary:
+        raise NotImplementedError()
+
+    vec2 = copy.copy(vector2)
+    vec2 ^= vector1
+    # .5 - normalized hamming distance
+    nnhd = 2 * (.5 * len(vec2) - vec2.count(True)) / len(vec2)
+    return nnhd
+
+
+def get_vector_for_token(elemental_vectors, semantic_vectors, predicate_vectors,
+                         token: str) -> bitarray:
+    """
+    :param elemental_vectors:
+    :param semantic_vectors:
+    :param predicate_vectors:
+    :param token: A string token such as P(side_effect) or S(drug). More complex expressions are not currently supported
+    :return:
+    """
+    if token[0] == "P":
+        vectors = predicate_vectors
+    elif token[0] == "E" or token[0] == "C":
+        vectors = elemental_vectors
+    elif token[0] == "S":
+        vectors = semantic_vectors
+    else:
+        raise MalformedQueryError("Vector set identifier must be P, E, or S (was", token[0], ")")
+
+    token = token[2:-1]
+    if token not in vectors[0]:
+        raise TermNotFoundError(token)
+
+    query_index = vectors[0].index(token)
+    return vectors[1][query_index]
+
+
+def get_bound_product_query_vector_from_string(elemental_vectors, semantic_vectors, predicate_vectors,
+                                               query: str) -> bitarray:
+    """
+    :param elemental_vectors:
+    :param semantic_vectors:
+    :param predicate_vectors:
+    :param query: calculate the bound product of the terms to be bound in this query. E.g. a query of E(south_africa)*S(pretoria) would result in the elemental vector for South Africa and the semantic vector for Pretoria being looked up; then their bound product is returned.
+    :return: Vector for the specified query term.
+    """
+    if "|" in query:
+        raise NotImplementedError()
+
+    if "+" in query:
+        raise NotImplementedError()
+
+    result = None
+    tokens = query.split("*")
+    for token in tokens:
+        v = copy.copy(get_vector_for_token(elemental_vectors, semantic_vectors, predicate_vectors, token))
+        if result is None:
+            result = v
+        else:
+            result ^= v
+    return result
+
+
+class TermNotFoundError(ValueError):
+    def __init__(self, term: str, *args: object) -> None:
+        super().__init__("Term not found:", term)
+
+
+class MalformedQueryError(ValueError):
+    def __init__(self, query: str, *args: object) -> None:
+        super().__init__("Not a valid query:", query)
 
 
 def readfile(fileName):
