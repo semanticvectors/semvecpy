@@ -4,7 +4,6 @@ import struct
 import copy
 import numpy as np
 from bitarray import bitarray
-from bitstring import BitArray
 
 def getvector(wordvecs,term):
     """
