@@ -62,6 +62,17 @@ def get_k_b_neighbors(bwordvectors, query_vec, k):
 
 def search(term: str, search_vectors, elemental_vectors=None, semantic_vectors=None,
            predicate_vectors=None, count=20, search_type="single_term"):
+    """
+    Search for terms that have representations that are similar to the given term's vector.
+    :param term: search term (word or expression)
+    :param search_vectors: the vector file to search for similar terms
+    :param elemental_vectors:
+    :param semantic_vectors:
+    :param predicate_vectors:
+    :param count: number of results to return.
+    :param search_type: currenlty supported: boundproduct or single_term. If single_term is specified, it is assumed that the term comes from search_vectors and searc_vectors will be searched for other terms that are similar to the given term. If boundproduct is specified, the expression will be resolved using the supplied vectors and the search_vectors will be searched for the resulting vector.
+    :return: Top {count} most similar terms from search_vectors.
+    """
     if search_type is not "single_term" and search_type is not "boundproduct":
         raise NotImplementedError()
 
@@ -264,4 +275,3 @@ def readfile(fileName):
             fileContent = file.read(1)
 
     return (words, vectors)
-
