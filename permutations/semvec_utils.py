@@ -58,7 +58,26 @@ def get_k_b_neighbors(bwordvectors, query_vec, k):
     return results
 
 
-def compare_terms_batch(elemental_vectors, semantic_vectors, predicate_vectors, terms) -> List[float]:
+def search(term: str, search_vectors, elemental_vectors=None, semantic_vectors=None,
+           predicate_vectors=None, count=20, search_type="single_term"):
+    if search_type is not "single_term" and search_type is not "boundproduct":
+        raise NotImplementedError()
+
+    if search_type is "single_term":
+        return get_k_bvec_neighbors(search_type, term, count)
+    else:
+        if search_type is "boundproduct" and (elemental_vectors is None
+                                              or semantic_vectors is None
+                                              or predicate_vectors is None):
+            raise ValueError("All three vector files must be provided if search type is boundproduct")
+
+        v = get_bound_product_query_vector_from_string(term, elemental_vectors=elemental_vectors,
+                                                       semantic_vectors=semantic_vectors,
+                                                       predicate_vectors=predicate_vectors)
+        return get_k_b_neighbors(search_vectors, v, count)
+
+
+def compare_terms_batch(terms, elemental_vectors, semantic_vectors, predicate_vectors) -> List[float]:
     """
     Compares the terms in the specified list of term comparisons.
     :param elemental_vectors:
@@ -72,12 +91,15 @@ def compare_terms_batch(elemental_vectors, semantic_vectors, predicate_vectors, 
         if term.count("|") is not 1:
             raise ValueError("Input must contain exactly one | character per line")
         term1, term2 = tuple(term.split("|"))
-        similarities.append(compare_terms(elemental_vectors, semantic_vectors, predicate_vectors, term1, term2))
+        similarities.append(compare_terms(term1, term2,
+                                          elemental_vectors=elemental_vectors,
+                                          semantic_vectors=semantic_vectors,
+                                          predicate_vectors=predicate_vectors))
     return similarities
 
 
-def compare_terms(elemental_vectors, semantic_vectors, predicate_vectors,
-                  term1: str, term2: str, search_type: str = "boundproduct") -> float:
+def compare_terms(term1: str, term2: str, elemental_vectors, semantic_vectors, predicate_vectors,
+                  search_type: str = "boundproduct") -> float:
     """
     Look up the vector representations for the two given terms and determine the similarity between them.
     :param elemental_vectors:
@@ -92,8 +114,12 @@ def compare_terms(elemental_vectors, semantic_vectors, predicate_vectors,
         raise NotImplementedError()
 
     return measure_overlap(
-        get_bound_product_query_vector_from_string(elemental_vectors, semantic_vectors, predicate_vectors, term1),
-        get_bound_product_query_vector_from_string(elemental_vectors, semantic_vectors, predicate_vectors, term2))
+        get_bound_product_query_vector_from_string(term1, elemental_vectors=elemental_vectors,
+                                                   semantic_vectors=semantic_vectors,
+                                                   predicate_vectors=predicate_vectors),
+        get_bound_product_query_vector_from_string(term2, elemental_vectors=elemental_vectors,
+                                                   semantic_vectors=semantic_vectors,
+                                                   predicate_vectors=predicate_vectors))
 
 
 def measure_overlap(vector1, vector2, binary: bool = True) -> float:
@@ -114,8 +140,7 @@ def measure_overlap(vector1, vector2, binary: bool = True) -> float:
     return nnhd
 
 
-def get_vector_for_token(elemental_vectors, semantic_vectors, predicate_vectors,
-                         token: str) -> bitarray:
+def get_vector_for_token(token: str, elemental_vectors, semantic_vectors, predicate_vectors) -> bitarray:
     """
     :param elemental_vectors:
     :param semantic_vectors:
@@ -140,8 +165,7 @@ def get_vector_for_token(elemental_vectors, semantic_vectors, predicate_vectors,
     return vectors[1][query_index]
 
 
-def get_bound_product_query_vector_from_string(elemental_vectors, semantic_vectors, predicate_vectors,
-                                               query: str) -> bitarray:
+def get_bound_product_query_vector_from_string(query: str, elemental_vectors, semantic_vectors, predicate_vectors) -> bitarray:
     """
     :param elemental_vectors:
     :param semantic_vectors:
@@ -158,7 +182,9 @@ def get_bound_product_query_vector_from_string(elemental_vectors, semantic_vecto
     result = None
     tokens = query.split("*")
     for token in tokens:
-        v = copy.copy(get_vector_for_token(elemental_vectors, semantic_vectors, predicate_vectors, token))
+        v = copy.copy(get_vector_for_token(token, elemental_vectors=elemental_vectors,
+                                           semantic_vectors=semantic_vectors,
+                                           predicate_vectors=predicate_vectors))
         if result is None:
             result = v
         else:
