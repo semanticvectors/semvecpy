@@ -47,6 +47,8 @@ def get_k_bvec_neighbors(bwordvectors, query_term, k):
 def get_k_b_neighbors(bwordvectors, query_vec, k):
     """Returns the nearest neighboring to terms to query_vec - a binary vector."""
     sims = []
+    if k > len(bwordvectors[0]):
+        k = len(bwordvectors[0])
     for vector in bwordvectors[1]:
         nnhd = measure_overlap(query_vec, vector)
         sims.append(nnhd)
@@ -64,7 +66,7 @@ def search(term: str, search_vectors, elemental_vectors=None, semantic_vectors=N
         raise NotImplementedError()
 
     if search_type is "single_term":
-        return get_k_bvec_neighbors(search_type, term, count)
+        return get_k_bvec_neighbors(search_vectors, term, count)
     else:
         if search_type is "boundproduct" and (elemental_vectors is None
                                               or semantic_vectors is None

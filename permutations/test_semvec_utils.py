@@ -15,19 +15,19 @@ class TestSemvecUtils(unittest.TestCase):
         result = semvec.compare_terms(term1="P(HAS_CURRENCY)", term2="P(CAPITAL_OF)",
                                       elemental_vectors=self.elemental_vectors, semantic_vectors=self.semantic_vectors,
                                       predicate_vectors=self.predicate_vectors)
-        self.assertEqual(0.0625, result)
+        self.assertEqual(-0.0625, result)
 
     def test_compareterms2(self):
         result = semvec.compare_terms(term1="S(pretoria_(executive))", term2="E(south_africa)",
                                       elemental_vectors=self.elemental_vectors, semantic_vectors=self.semantic_vectors,
                                       predicate_vectors=self.predicate_vectors)
-        self.assertEqual(-0.03125, result)
+        self.assertEqual(-0.15625, result)
 
     def test_compareterms3(self):
         result = semvec.compare_terms(term1="S(pretoria_(executive))*E(south_africa)", term2="P(CAPITAL_OF)",
                                       elemental_vectors=self.elemental_vectors, semantic_vectors=self.semantic_vectors,
                                       predicate_vectors=self.predicate_vectors)
-        self.assertEqual(0.78125, result)
+        self.assertEqual(0.84375, result)
 
     def test_compareterms4(self):
         with self.assertRaises(semvec.TermNotFoundError):
@@ -60,7 +60,7 @@ class TestSemvecUtils(unittest.TestCase):
         result = semvec.compare_terms_batch(terms=terms, elemental_vectors=self.elemental_vectors,
                                             semantic_vectors=self.semantic_vectors,
                                             predicate_vectors=self.predicate_vectors)
-        self.assertListEqual([0.0625, -0.03125, 0.78125], result)
+        self.assertListEqual([-0.0625, -0.15625, 0.84375], result)
 
     def test_comparetermsbatch2(self):
         terms = []
@@ -77,13 +77,36 @@ class TestSemvecUtils(unittest.TestCase):
                                predicate_vectors=self.predicate_vectors,
                                search_type="boundproduct")
         self.assertListEqual([
-            [0.500000, "CAPITAL_OF"],
-            [0.343750, "HAS_NATIONAL_ANIMAL"],
-            [0.093750, "HAS_CURRENCY"],
-            [0.062500, "HAS_NATIONAL_ANIMAL-INV"],
-            [-0.093750, "HAS_CURRENCY-INV"],
-            [-0.093750, "CAPITAL_OF-INV"]
+            [0.843750, "CAPITAL_OF"],
+            [0.031250, "CAPITAL_OF-INV"],
+            [0.000000, "HAS_CURRENCY-INV"],
+            [-0.031250, "HAS_CURRENCY"],
+            [-0.187500, "HAS_NATIONAL_ANIMAL"],
+            [-0.406250, "HAS_NATIONAL_ANIMAL-INV"],
         ], result)
+
+    def test_search2(self):
+        result = semvec.search("CAPITAL_OF",
+                               search_vectors=self.predicate_vectors,
+                               elemental_vectors=self.elemental_vectors,
+                               semantic_vectors=self.semantic_vectors,
+                               predicate_vectors=self.predicate_vectors,
+                               search_type="single_term")
+        result2 = semvec.search("P(CAPITAL_OF)",
+                               search_vectors=self.predicate_vectors,
+                               elemental_vectors=self.elemental_vectors,
+                               semantic_vectors=self.semantic_vectors,
+                               predicate_vectors=self.predicate_vectors,
+                               search_type="boundproduct")
+        self.assertListEqual([
+            [1.000000, "CAPITAL_OF"],
+            [0.000000, "CAPITAL_OF-INV"],
+            [-0.031250, "HAS_CURRENCY-INV"],
+            [-0.062500, "HAS_CURRENCY"],
+            [-0.218750, "HAS_NATIONAL_ANIMAL"],
+            [-0.375000, "HAS_NATIONAL_ANIMAL-INV"],
+        ], result)
+        self.assertListEqual(result, result2)
 
 
 if __name__ == '__main__':
