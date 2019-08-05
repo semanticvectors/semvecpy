@@ -1,6 +1,6 @@
 import unittest
 
-import permutations.semvec_utils as semvec
+import vectors.semvec_utils as semvec
 
 
 class TestSemvecUtils(unittest.TestCase):
