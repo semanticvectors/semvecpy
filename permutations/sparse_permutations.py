@@ -2,13 +2,15 @@
 
 There are some overlaps and some differences with dense_permutations.py, we haven't attempted to unify these.
 """
-import math
 import numpy as np
 import random
 
 from typing import Iterable, List, Tuple
 
+import vectors.vector_utils as vu
 import permutations.constants as c
+
+import dense_permutations as dp
 
 
 def get_random_sparse_vector(dim: int, entries: int) -> np.array:
@@ -22,28 +24,11 @@ def get_random_sparse_vector(dim: int, entries: int) -> np.array:
     return new_vector
 
 
-def normalize(vector: Iterable[float]) -> List[float]:
-    norm = math.sqrt(sum([x * x for x in vector]))
-    for i in range(len(vector)):
-        vector[i] /= norm
-
-
 def get_sort_permutation(vector: Iterable[float]) -> List[Tuple[int, float]]:
     """Returns the permutation that sorts the input array descending"""
     indexed_vector = [(i, vector[i]) for i in range(len(vector))]
     sorted_indexed_vector = sorted(indexed_vector, key=lambda x: x[1], reverse=True)
     return list([x[0] for x in sorted_indexed_vector])
-
-
-def permute_vector(perm: List[int], vector: Iterable[float]) -> np.array:
-    """Returns the result of applying the given permutation to the given vector
-
-    Input perm and vector must be of the same length.
-    """
-    permuted_vector = np.zeros(len(vector))
-    for i in range(len(perm)):
-        permuted_vector[perm[i]] = vector[i]
-    return permuted_vector
 
 
 def inverse_permutation(perm: List[int]):
@@ -66,13 +51,13 @@ def permutation_to_matrix(perm: List[int]) -> np.array:
 
 def main():
     vector1 = get_random_sparse_vector(c.DIMENSION, c.SEED_ENTRIES)
-    normalize(vector1)
+    vu.normalize(vector1)
     vector2 = get_random_sparse_vector(c.DIMENSION, c.SEED_ENTRIES)
-    normalize(vector2)
-    print("Similarity before sorting:", sum(vector1 * vector2))
-    perm_vector1 = permute_vector(get_sort_permutation(vector1), vector1)
-    perm_vector2 = permute_vector(get_sort_permutation(vector2), vector2)
-    print("Similarity after sorting:", sum(perm_vector1 * perm_vector2))
+    vu.normalize(vector2)
+    print("Similarity before sorting:", vu.cosine_similarity(vector1, vector2))
+    perm_vector1 = dp.permute_vector(get_sort_permutation(vector1), vector1)
+    perm_vector2 = dp.permute_vector(get_sort_permutation(vector2), vector2)
+    print("Similarity after sorting:", vu.cosine_similarity(perm_vector1, perm_vector2))
 
 
 if __name__ == '__main__':
