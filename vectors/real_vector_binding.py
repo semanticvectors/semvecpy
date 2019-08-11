@@ -22,10 +22,15 @@ def create_dense_random_vector(dimension: int, seed=None):
 
 
 class GradedVectorFactory:
-    def __init__(self, dimension):
+    def __init__(self, dimension: int):
         self.dimension = dimension
-        self.alpha_vec = vu.normalize(create_dense_random_vector(dimension, seed=100))
-        self.omega_vec = vu.normalize(create_dense_random_vector(dimension, seed=-100))
+        self.alpha_vec = vu.normalize(create_dense_random_vector(dimension, seed=1))
+        self.omega_vec = vu.normalize(create_dense_random_vector(dimension, seed=2))
 
-    def get_vector_for_proportion(self, proportion):
-        return np.multiply(self.alpha_vec, 1 - proportion) + np.multiply(self.omega_vec, proportion)
+    def get_vector_for_proportion(self, proportion: float):
+        """
+        Gets the vector interpolated by a given proportion between the vector factory's alpha and omega vectors.
+        :param proportion: Usually between 0 and 1, though if outside those ranges the result will be an extrapolation.
+        :return: Normalized vector between alpha and omega vectors.
+        """
+        return vu.normalize(np.multiply(self.alpha_vec, 1 - proportion) + np.multiply(self.omega_vec, proportion))
