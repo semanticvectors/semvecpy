@@ -36,7 +36,7 @@ class OrthographicVectorFactory:
             if hex_key not in self.elemental_vectors:
                 self.elemental_vectors[hex_key] = vu.create_dense_random_vector(self.dimension, seed=hex_key)
             output_vector += vu.circular_convolution(
-                self.gvf.get_vector_for_proportion(pos / (len(word) - 1)), self.elemental_vectors[hex_key])
+                self.gvf.get_vector_for_proportion((pos + 0.5) / (len(word))), self.elemental_vectors[hex_key])
 
         self.word_vectors[word] = output_vector
         return output_vector
