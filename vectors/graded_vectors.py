@@ -40,6 +40,12 @@ class OrthographicVectorFactory:
 
     def make_and_store_word_vector(self, word: str):
         """Makes a vector for the given word, adds it to the word_vectors dictionary, and returns the new vector."""
+        output_vector = self.make_word_vector(word)
+        self.word_vectors[word] = output_vector
+        return output_vector
+
+    def make_word_vector(self, word: str):
+        """Makes a vector for the given word and returns the new vector."""
         output_vector = np.zeros(self.dimension, dtype=np.float32)
         for pos in range(len(word)):
             letter = word[pos]
@@ -48,5 +54,8 @@ class OrthographicVectorFactory:
                 self.character_vectors[hex_key] = vu.create_dense_random_vector(self.dimension, seed=hex_key)
             output_vector += vu.circular_convolution(
                 self.gvf.get_vector_for_proportion((pos + 0.5) / (len(word))), self.character_vectors[hex_key])
-        self.word_vectors[word] = output_vector
         return output_vector
+
+    def get_k_nearest_neighbors(self, query_word: str, k: int):
+        query_vector = self.make_word_vector(query_word)
+        return vu.get_k_neighbors_from_pairs(self.word_vectors.items(), query_vector, k)
