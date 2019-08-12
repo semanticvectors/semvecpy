@@ -19,15 +19,15 @@ class TestGradedVectors(TestCase):
 
     def test_orthographic_vector_factory_similarities(self):
         ovf = gv.OrthographicVectorFactory(100)
-        self.assertGreater(cs(ovf.get_vector("word"), ovf.get_vector("word")),
-                           cs(ovf.get_vector("word"), ovf.get_vector("word2")))
-        self.assertGreater(cs(ovf.get_vector("word"), ovf.get_vector("word2")),
-                           cs(ovf.get_vector("word"), ovf.get_vector("word222222")))
+        self.assertGreater(cs(ovf.get_word_vector("word"), ovf.get_word_vector("word")),
+                           cs(ovf.get_word_vector("word"), ovf.get_word_vector("word2")))
+        self.assertGreater(cs(ovf.get_word_vector("word"), ovf.get_word_vector("word2")),
+                           cs(ovf.get_word_vector("word"), ovf.get_word_vector("word222222")))
 
     def test_orthographic_vector_factory_cache(self):
         ovf = gv.OrthographicVectorFactory(100)
-        self.assertEqual(len(ovf.elemental_vectors), 0)
+        self.assertEqual(len(ovf.character_vectors), 0)
         self.assertEqual(len(ovf.word_vectors), 0)
-        ovf.get_vector("word")
-        self.assertEqual(len(ovf.elemental_vectors), 4)
+        ovf.get_word_vector("word")
+        self.assertEqual(len(ovf.character_vectors), 4)
         self.assertEqual(len(ovf.word_vectors), 1)

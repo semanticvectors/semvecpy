@@ -39,7 +39,7 @@ countries = [
 def orthographic_demo():
     ovf = gv.OrthographicVectorFactory(100)
     text_input = "Canda"
-    word_sims = [(country, vu.cosine_similarity(ovf.get_vector(country), ovf.get_vector(text_input)))
+    word_sims = [(country, vu.cosine_similarity(ovf.get_word_vector(country), ovf.get_word_vector(text_input)))
                  for country in countries]
 
     word_sims.sort(key=lambda x: x[1], reverse=True)

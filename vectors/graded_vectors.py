@@ -19,24 +19,34 @@ class GradedVectorFactory:
 
 
 class OrthographicVectorFactory:
+    """
+    OrthographicVectorFactory looks after creating and storing and matching orthographic word vectors.
+
+    These vectors represent words as a sum of vectors that bind each character with its relative position in the word.
+    """
     def __init__(self, dimension):
         self.dimension = dimension
         self.gvf = GradedVectorFactory(dimension)
-        self.elemental_vectors = {}
+        self.character_vectors = {}
         self.word_vectors = {}
 
-    def get_vector(self, word: str):
+    def get_word_vector(self, word: str):
+        """Gets the vector for the given word, creating and storing it if not already present."""
         if word in self.word_vectors:
             return self.word_vectors[word]
+        else:
+            output_vector = self.make_and_store_word_vector(word)
+            return output_vector
 
+    def make_and_store_word_vector(self, word: str):
+        """Makes a vector for the given word, adds it to the word_vectors dictionary, and returns the new vector."""
         output_vector = np.zeros(self.dimension, dtype=np.float32)
         for pos in range(len(word)):
             letter = word[pos]
             hex_key = int(letter.encode().hex(), 16)
-            if hex_key not in self.elemental_vectors:
-                self.elemental_vectors[hex_key] = vu.create_dense_random_vector(self.dimension, seed=hex_key)
+            if hex_key not in self.character_vectors:
+                self.character_vectors[hex_key] = vu.create_dense_random_vector(self.dimension, seed=hex_key)
             output_vector += vu.circular_convolution(
-                self.gvf.get_vector_for_proportion((pos + 0.5) / (len(word))), self.elemental_vectors[hex_key])
-
+                self.gvf.get_vector_for_proportion((pos + 0.5) / (len(word))), self.character_vectors[hex_key])
         self.word_vectors[word] = output_vector
         return output_vector
