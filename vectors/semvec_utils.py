@@ -6,6 +6,7 @@ from typing import List
 import numpy as np
 from bitarray import bitarray
 
+
 def getvector(wordvecs,term):
     """
     Retrieve the vector for a term
@@ -17,10 +18,12 @@ def getvector(wordvecs,term):
     else:
         return None
 
+
 def get_k_vec_neighbors(vectors, query_term, k):
     """Returns the nearest neighboring terms to query_term - a term."""
     query_vec = getvector(vectors,query_term)
     return get_k_neighbors(vectors, query_vec, k)
+
 
 def get_k_neighbors(vectors, query_vec, k):
     """Returns the nearest neighboring terms to query_vec - a real vector"""
