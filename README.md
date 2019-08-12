@@ -1,6 +1,6 @@
 # semvecpy 
 
-Semvecpy is a repository for Semantic Vectors work in python
+Semvecpy is a repository for Semantic Vectors work in Python.
 
 It is a research project. It includes some well-tested production-grade work, but it's up to
 users to be aware of which parts this is.
@@ -26,6 +26,10 @@ discuss how to merge things back together later. Basically DON'T WORRY.
 * Imports should work relative to the project root directory (this one).
   * We recommend adding this directory to your PYTHONPATH.
 * Module names are preferred with underscore_separators, but there's no firm rule in place.
+* Test for module `.../dir/foo.py` are in `.../dir/foo_test.y`.
+  * This is one of the standard patterns, and it makes it particularly easy to see which modules
+  already have dedicated tests, and whether these files should be moved / renamed if the modules
+  they're testing are renamed.
   
 ## TODOs
 
