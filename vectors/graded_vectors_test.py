@@ -31,3 +31,10 @@ class TestGradedVectors(TestCase):
         ovf.get_word_vector("word")
         self.assertEqual(len(ovf.character_vectors), 4)
         self.assertEqual(len(ovf.word_vectors), 1)
+
+    def test_orthographic_vector_factory_search(self):
+        ovf = gv.OrthographicVectorFactory(100)
+        for word in ["boo", "bit", "bot"]:
+            ovf.make_and_store_word_vector(word)
+        results = ovf.get_k_nearest_neighbors("boo", 3)
+        self.assertListEqual([result[0] for result in results], ["boo", "bot", "bit"])

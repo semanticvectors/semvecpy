@@ -1,5 +1,6 @@
+import heapq
+from typing import Iterable, Tuple
 import numpy as np
-
 
 def normalize(vector):
     """
@@ -35,3 +36,18 @@ def create_dense_random_vector(dimension: int, seed=None):
     if seed:
         np.random.seed(seed)
     return np.random.uniform(low=-1, high=1, size=dimension)
+
+
+def get_k_neighbors_from_pairs(object_vectors: Iterable[Tuple[object, Iterable[float]]],
+                               query_vector: Iterable[float], k: int) -> Iterable[Tuple[object, float]]:
+    """
+    Gets the nearest k vectors and their cosine similarity scores.
+    :param object_vectors: Iterable of (object, vector), e.g., from calling .items on a dict[word:vector]
+    :param query_vector: Vector for matching
+    :param k: Number of neighbors to find
+    :return: Iterable of (object, score) pairs.
+    """
+    object_scores = iter(map(lambda word_vec: (word_vec[0], cosine_similarity(word_vec[1], query_vector)),
+                             object_vectors))
+    k_best = heapq.nlargest(k, object_scores, key=lambda x: x[1])
+    return k_best
