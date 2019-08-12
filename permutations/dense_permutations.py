@@ -4,6 +4,7 @@ There are some overlaps and some differences with sparse_permutations.py, we hav
 """
 import numpy as np
 import permutations.constants as c
+from vectors.vector_utils import normalize, cosine_similarity
 
 
 def get_random_vector(dimension):
@@ -12,16 +13,6 @@ def get_random_vector(dimension):
     Returns a 32bit float vector as a numpy array of shape (100,).
     """
     return np.random.randn(dimension).astype(np.float32)
-
-
-def normalize(vector):
-    """
-    Compute the L2 norm (||v||2) for a vector, v.
-    Returns the normalized vector (same dtype). 
-    Note that spares permutations modifies the vector in place in contrast.
-    See test_dense_permutations.py test case difference.
-    """   
-    return vector / np.sqrt(np.dot(vector, vector))
 
 
 def get_sort_permutation(vector):
@@ -68,19 +59,11 @@ def permutation_to_matrix(permutation):
     """
     Returns a matrix version of a permutation, as a linear transformation.
     Permutation should be a 1 dimensional index vector.
+    Returned matrix should be multiplied on the right to behave as permutation. TODO: Decide if we want it this way.
     """
     perm_matrix = np.zeros((permutation.shape[0], permutation.shape[0]), dtype=np.float32)
     perm_matrix[permutation, np.arange(permutation.shape[0])] = 1
     return perm_matrix
-
-
-def cosine_similarity(vector1, vector2):
-    vector1 = vector1.astype(np.float64)
-    vector2 = vector2.astype(np.float64)
-    norm1 = np.sqrt(np.dot(vector1,vector1))
-    norm2 = np.sqrt(np.dot(vector2, vector2))
-    _cosine_similarity = np.dot(vector1, vector2) / (norm1*norm2) # value between -1 and 1
-    return ((_cosine_similarity + 1)/2).astype(np.float32) # scale to 0 to 1
 
 
 def main():
