@@ -30,4 +30,4 @@ discuss how to merge things back together later. Basically DON'T WORRY.
 ## TODOs
 
 Figure out how to make this package pip-installable for external users.
-
+See https://packaging.python.org/tutorials/packaging-projects/.
