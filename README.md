@@ -23,6 +23,7 @@ discuss how to merge things back together later. Basically DON'T WORRY.
 
 ## Useful Coding Conventions
 
+* Use python 3+. We're making no efforts to be compatiable with Python 2 or earlier. 
 * Imports should work relative to the project root directory (this one).
   * We recommend adding this directory to your PYTHONPATH.
 * Module names are preferred with underscore_separators, but there's no firm rule in place.
