@@ -1,3 +1,4 @@
+import os
 import unittest
 
 import vectors.semvec_utils as semvec
@@ -5,11 +6,16 @@ import vectors.semvec_utils as semvec
 
 class TestSemvecUtils(unittest.TestCase):
     def setUp(self) -> None:
+        # These few lines should enable the test setup to find the test data, wherever the test is run from.
+        this_dir = os.path.dirname(__file__)
+        semvecpy_root_dir = os.path.split(os.path.split(this_dir)[0])[0]
+        test_data_dir = os.path.join(semvecpy_root_dir, "test_data")
+
         # vectors trained as follows:
         # java -cp semanticvectors-5.9.jar pitt.search.semanticvectors.ESP -luceneindexpath predication_index -vectortype binary -dimension 64 -trainingcycles 8 -mutablepredicatevectors
-        self.predicate_vectors = semvec.readfile("../unittest_vectors/predicatevectors.bin")
-        self.semantic_vectors = semvec.readfile("../unittest_vectors/semanticvectors.bin")
-        self.elemental_vectors = semvec.readfile("../unittest_vectors/elementalvectors.bin")
+        self.predicate_vectors = semvec.readfile(os.path.join(test_data_dir, "predicatevectors.bin"))
+        self.semantic_vectors = semvec.readfile(os.path.join(test_data_dir, "semanticvectors.bin"))
+        self.elemental_vectors = semvec.readfile(os.path.join(test_data_dir, "elementalvectors.bin"))
 
     def test_compareterms1(self):
         result = semvec.compare_terms(term1="P(HAS_CURRENCY)", term2="P(CAPITAL_OF)",

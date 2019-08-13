@@ -21,19 +21,30 @@ go ahead. It follows that some changes may be unexpected to some authors. If
 it's a bother just sync your repository wherever you left off, feel free to fork, and we can 
 discuss how to merge things back together later. Basically DON'T WORRY.
 
-## Useful Coding Conventions
+## For External Users
 
-* Use Python 3+. We're making no efforts to be compatiable with Python 2 or earlier. 
-* Imports should work relative to the project root directory (this one).
-  * We recommend adding this directory to your PYTHONPATH.
+### Installation
+
+Clone the repository, or install using `pip install git+https://github.com/semanticvectors/semvecpy`.
+TODO: It would be nice to make this just `pip install semvecpy`. See https://packaging.python.org/tutorials/packaging-projects/.
+
+### Imports
+
+So far the package has been mainly designed for internal experiments rather than external reuse. If statements like `import vectors` or `import permutations` cause name clashes for you, please let us know.
+
+###
+
+## For Internal Developers
+
+* Use Python 3+. We're making no efforts to be compatible with Python 2 or earlier. 
+* Imports should work relative to the project ./src directory.
+  * We recommend adding this ./src directory to your PYTHONPATH. 
+  * If using anaconda, there's documentation saying you don't need to set PYTHONPATH
+  (see https://docs.conda.io/projects/conda/en/latest/user-guide/install/), but I'm not
+  sure this works for package internal development. Please shout if you know another solution.
 * Module names are preferred with underscore_separators, but there's no firm rule in place.
 * Test for module `.../dir/foo.py` are in `.../dir/foo_test.y`.
   * This is one of the standard patterns, and it makes it particularly easy to see which modules
   already have dedicated tests, and whether these files should be moved / renamed if the modules
   they're testing are renamed.
   
-## Installation
-
-Clone the repository, or install using `pip install git+https://github.com/semanticvectors/semvecpy`.
-
-TODO: It would be nice to make this just `pip install semvecpy`. See https://packaging.python.org/tutorials/packaging-projects/.
