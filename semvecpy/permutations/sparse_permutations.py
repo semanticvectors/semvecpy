@@ -10,7 +10,7 @@ from typing import Iterable, List, Tuple
 import vectors.vector_utils as vu
 import permutations.constants as c
 
-import dense_permutations as dp
+import permutations.dense_permutations as dp
 
 
 def get_random_sparse_vector(dim: int, entries: int) -> np.array:
