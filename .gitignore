@@ -9,6 +9,7 @@ venv
 *~
 
 # For distribution
+build
 dist
 semvecpy.egg-info
 
