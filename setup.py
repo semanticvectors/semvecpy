@@ -6,8 +6,8 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="semvecpy",
     version="0.1",
-    author="Several contributors including Dominic Widdows",
-    author_email="dwiddows@gmail.com",
+    author="Semantic Vectors Authors",
+    author_email="semanticvectors@googlegroups.com",
     description="Semantic Vectors work in Python",
     long_description=long_description,
     long_description_content_type="text/markdown",
