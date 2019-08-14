@@ -37,8 +37,8 @@ So far the package has been mainly designed for internal experiments rather than
 ## For Internal Developers
 
 * Use Python 3+. We're making no efforts to be compatible with Python 2 or earlier. 
-* Imports should work relative to the project ./src directory.
-  * We recommend adding this ./src directory to your PYTHONPATH. 
+* Imports should work relative to the project ./semvecpy directory.
+  * We recommend adding this ./semvecpy directory to your PYTHONPATH. 
   * If using anaconda, there's documentation saying you don't need to set PYTHONPATH
   (see https://docs.conda.io/projects/conda/en/latest/user-guide/install/), but I'm not
   sure this works for package internal development. Please shout if you know another solution.
