@@ -13,6 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/semanticvector/semvecpy",
     packages=setuptools.find_packages(),
+    python_requires='>=3',
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: BSD 3-Clause",
