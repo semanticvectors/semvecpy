@@ -2,6 +2,7 @@ import heapq
 from typing import Iterable, Tuple
 import numpy as np
 
+
 def normalize(vector):
     """
     Returns the normalized vector (same dtype) using the L2 norm (||v||2) for a vector, v.

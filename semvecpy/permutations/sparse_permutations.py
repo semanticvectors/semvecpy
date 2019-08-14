@@ -7,10 +7,9 @@ import random
 
 from typing import Iterable, List, Tuple
 
-import vectors.vector_utils as vu
-import permutations.constants as c
-
-import permutations.dense_permutations as dp
+import semvecpy.vectors.vector_utils as vu
+import semvecpy.permutations.constants as c
+import semvecpy.permutations.dense_permutations as dp
 
 
 def get_random_sparse_vector(dim: int, entries: int) -> np.array:

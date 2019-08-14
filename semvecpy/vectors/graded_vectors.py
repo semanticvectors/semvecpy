@@ -1,6 +1,6 @@
 import numpy as np
 
-import vectors.vector_utils as vu
+import semvecpy.vectors.vector_utils as vu
 
 
 class GradedVectorFactory:

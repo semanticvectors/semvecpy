@@ -3,8 +3,9 @@
 There are some overlaps and some differences with sparse_permutations.py, we haven't attempted to unify these.
 """
 import numpy as np
-import permutations.constants as c
-from vectors.vector_utils import normalize, cosine_similarity
+
+import semvecpy.permutations.constants as c
+from semvecpy.vectors.vector_utils import normalize, cosine_similarity
 
 
 def get_random_vector(dimension):

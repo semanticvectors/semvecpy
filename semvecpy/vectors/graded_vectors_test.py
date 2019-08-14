@@ -2,9 +2,9 @@ from unittest import TestCase
 
 import numpy.testing as npt
 
-import vectors.vector_utils as vu
-from vectors.vector_utils import cosine_similarity as cs
-import vectors.graded_vectors as gv
+from . import vector_utils as vu
+from semvecpy.vectors.vector_utils import cosine_similarity as cs
+from . import graded_vectors as gv
 
 
 class TestGradedVectors(TestCase):

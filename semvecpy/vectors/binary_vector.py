@@ -9,6 +9,7 @@ spec = [
     ('votingRecord', float32[:]),          # an array field
 ]
 
+
 @jitclass(spec)
 class BinaryVector(object):
 
