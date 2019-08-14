@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import numpy.testing as npt
 
-import dense_permutations as dp
+import permutations.dense_permutations as dp
 
 
 class TestDensePermutations(unittest.TestCase):
