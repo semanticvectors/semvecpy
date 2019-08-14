@@ -4,5 +4,11 @@ __pycache__
 .pytest_cache
 venv
 .ipynb_checkpoints
+
 # For emacs
 *~
+
+# For distribution
+dist
+semvecpy.egg-info
+
