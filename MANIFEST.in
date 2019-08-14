@@ -1,2 +1,7 @@
+# Include LICENSE and README
+include LICENSE.txt
+include README.md
+
+# Exclude tests
 exclude test_data
 global-exclude *_test.py
