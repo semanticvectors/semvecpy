@@ -28,10 +28,11 @@ array([0.6, 0.8])
 ## For Internal Developers
 
 * Imports should work relative to the project ./semvecpy directory.
-  * We recommend adding this ./semvecpy directory to your PYTHONPATH. 
-  * If using anaconda, there's documentation saying you don't need to set PYTHONPATH
-  (see https://docs.conda.io/projects/conda/en/latest/user-guide/install/), but I'm not
-  sure this works for package internal development. Please shout if you know another solution.
+  * E.g., `from semvecpy.vectors import vector_utils`, rather than just `from vectors import vector_utils`.
+  * Please don't add deeper dependencies to your PYTHONPATH or set directories as sources roots in an IDE to make import
+  statements shorter, this may break other internal and external developers.
+  * It's fine to use `from . import my_module` in tests, though fully qualified dependencies are encouraged for readability
+  in module source files.
 * Module names are preferred with underscore_separators, but there's no firm rule in place.
 * Test for module `.../dir/foo.py` are in `.../dir/foo_test.y`.
   * This is one of the standard patterns, and it makes it particularly easy to see which modules
