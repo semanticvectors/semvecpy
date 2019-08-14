@@ -3,8 +3,8 @@ from unittest import TestCase
 import numpy as np
 import numpy.testing as npt
 
-import sparse_permutations as sp
-import dense_permutations as dp
+from . import sparse_permutations as sp
+from . import dense_permutations as dp
 
 
 class TestSparsePermutations(TestCase):

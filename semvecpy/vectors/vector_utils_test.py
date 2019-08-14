@@ -4,7 +4,7 @@ import unittest
 import numpy as np
 import numpy.testing as npt
 
-import vectors.vector_utils as vu
+from . import vector_utils as vu
 
 
 class TestVectorUtils(unittest.TestCase):
