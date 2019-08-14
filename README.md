@@ -1,11 +1,9 @@
 # semvecpy 
 
-Semvecpy is a repository for Semantic Vectors work in Python.
+Semvecpy is a repository for Semantic Vectors work in Python (version 3 and above).
 
 It is a research project. It includes some well-tested production-grade work, but it's up to
 users to be aware of which parts this is.
-
-It uses Python 3+. We're making no efforts to be compatible with Python 2 or earlier.
 
 ## For External Users
 
@@ -27,6 +25,8 @@ array([0.6, 0.8])
 
 ## For Internal Developers
 
+* Use Python 3+ throughout. 
+  * Please don't try to get `print "Hello World"` working instead of `print("Hello World")`.
 * Imports should work relative to the project ./semvecpy directory.
   * E.g., `from semvecpy.vectors import vector_utils`, rather than just `from vectors import vector_utils`.
   * Please don't add deeper dependencies to your PYTHONPATH or set directories as sources roots in an IDE to make import
