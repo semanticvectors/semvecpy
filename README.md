@@ -34,16 +34,20 @@ array([0.6, 0.8])
   * It's fine to use `from . import my_module` in tests, though fully qualified dependencies are encouraged for readability
   in module source files.
 * Module names are preferred with underscore_separators, but there's no firm rule in place.
-* Test for module `.../dir/foo.py` are in `.../dir/foo_test.y`.
+* Tests for module `.../dir/foo.py` are in `.../dir/foo_test.y`.
   * This is one of the standard patterns, and it makes it particularly easy to see which modules
   already have dedicated tests, and whether these files should be moved / renamed if the modules
   they're testing are renamed.
+  * `pytest .` should run and pass all tests from the `semvecpy` root directory.
  
 ### Useful Social Conventions
 
 Feel free to clone, fork, and play with this repository. When it comes to merging code,
 feel free to submit merge requests, and for frequent contributors, ask the Admins for
 Maintain permissions. We tend to say yes.
+
+Before sending merge requests, please do check that `pytest .` runs and passes all tests.
+Feel free to ask for help if it doesn't.
 
 Since it's a research project, we encourage work-in-progress and experimental code. 
 This does sometimes lead to duplicated functionality, some variation in naming and code styles,
