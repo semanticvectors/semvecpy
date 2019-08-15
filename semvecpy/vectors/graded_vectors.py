@@ -1,9 +1,25 @@
-import numpy as np
+"""
+Graded vectors are used to represent continuous quantities by interpolating between two endpoints.
+This ensures that proximity in terms of cosine similarity corresponds to similar quantities.
 
+Vectors for items in a given position are created by binding the vector for the item with the vector for
+the position.
+
+This is used in particular for representing the orthography of written words.
+
+The technique was introduced by Wahle, Cohen, Schvaneveldt, Widdows. For more information see:
+Orthogonality and Orthography: Introducing Measured Distance into Semantic Space.
+Trevor Cohen, Dominic Widdows, Manuel Wahle.
+Proceedings of the Seventh International Conference on Quantum Interaction, Leicester, UK, 2013.
+"""
+import numpy as np
 import semvecpy.vectors.vector_utils as vu
 
 
 class GradedVectorFactory:
+    """
+    GradedVectorFactory creates vectors for proportions by interpolation between between given endpoints.
+    """
     def __init__(self, dimension: int):
         self.dimension = dimension
         self.alpha_vec = vu.normalize(vu.create_dense_random_vector(dimension, seed=1))

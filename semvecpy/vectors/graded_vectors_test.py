@@ -1,7 +1,5 @@
 from unittest import TestCase
 
-import numpy.testing as npt
-
 from . import vector_utils as vu
 from semvecpy.vectors.vector_utils import cosine_similarity as cs
 from . import graded_vectors as gv

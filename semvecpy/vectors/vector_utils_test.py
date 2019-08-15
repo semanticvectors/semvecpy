@@ -8,7 +8,7 @@ from . import vector_utils as vu
 
 
 class TestVectorUtils(unittest.TestCase):
-    tol = 0.000001
+    tol = 0.0001
 
     def test_normalize(self):
         vector = np.asarray([1, 1, 1, 1], dtype=np.float32)
@@ -25,6 +25,14 @@ class TestVectorUtils(unittest.TestCase):
     def test_create_vector(self):
         vec = vu.create_dense_random_vector(5, seed=2)
         npt.assert_allclose([-0.1280102, -0.94814754, 0.09932496, -0.12935521, -0.1592644], vec, rtol=self.tol)
+
+        # Do it again to be sure.
+        vec2 = vu.create_dense_random_vector(5, seed=2)
+        npt.assert_allclose(vec, vec2, rtol=self.tol)
+
+        # Make sure a different seed gives a different answer.
+        vec3 = vu.create_dense_random_vector(5, seed=3)
+        npt.assert_allclose([ 0.101596,  0.416296, -0.418191,  0.021655,  0.785894], vec3, rtol=self.tol)
 
     def test_get_k_neighbors_from_pairs(self):
         pairs = [('x', (1, 0, 0)), ('y', (0, 1, 0)), ('z', (0, 0, 1))]
