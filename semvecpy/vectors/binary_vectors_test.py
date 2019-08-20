@@ -31,6 +31,15 @@ class TestBinaryVectors(TestCase):
         overlap = basevec.measure_overlap(toadd)
         self.assertEqual(overlap,1)
 
+    def test_set(self):
+        basevec = bv.BinaryVectorFactory.generate_zero_vector(512)
+        toadd = bv.BinaryVectorFactory.generate_random_vector(512)
+        basevec.set(toadd.bitset.copy())
+        overlap = basevec.measure_overlap(toadd)
+        basevec.tally_votes()
+        overlap += basevec.measure_overlap(toadd)
+        self.assertEqual(overlap,2)
+
     def test_bind(self):
         basevec = bv.BinaryVectorFactory.generate_random_vector(512)
         basebind = basevec.copy()

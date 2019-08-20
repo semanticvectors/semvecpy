@@ -70,7 +70,6 @@ class BinaryVector(object):
         self.voting_record = None
         self.set_zero_vector()
 
-    # set the bitset and voting record to match the incoming bit array
     def set(self, incoming_bitarray):
         """
         Sets the bit vector and voting record to the incoming bitarray (not a copy)
@@ -79,8 +78,8 @@ class BinaryVector(object):
         self.bitset = incoming_bitarray
         self.voting_record = np.zeros(self.dimension)
         as_list = 1 * np.array(self.bitset.tolist())
-        as_list[incoming_bitarray == 0] = -1
-        self.voting_record += incoming_bitarray
+        as_list[as_list == 0] = -1
+        self.voting_record = as_list
 
     def copy(self):
         """
