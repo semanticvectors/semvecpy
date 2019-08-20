@@ -7,7 +7,7 @@ import numpy as np
 from bitarray import bitarray
 
 
-def getvector(wordvecs,term):
+def getvector(wordvecs, term):
     """
     Retrieve the vector for a term
     Parameters are a pair of lists, wordvecs[0] - the terms, wordvecs[1] - the vectors
@@ -21,19 +21,19 @@ def getvector(wordvecs,term):
 
 def get_k_vec_neighbors(vectors, query_term, k):
     """Returns the nearest neighboring terms to query_term - a term."""
-    query_vec = getvector(vectors,query_term)
+    query_vec = getvector(vectors, query_term)
     return get_k_neighbors(vectors, query_vec, k)
 
 
 def get_k_neighbors(vectors, query_vec, k):
     """Returns the nearest neighboring terms to query_vec - a real vector"""
-    results=[]
+    results = []
     sims = np.matmul(vectors[1], query_vec)
     indices = np.argpartition(sims, -k)[-k:]
     indices = sorted(indices, key=lambda i: sims[i], reverse=True)
     for index in indices:
-        label=vectors[0][index]
-        results.append([sims[index],label])
+        label = vectors[0][index]
+        results.append([sims[index], label])
     return results
 
 
@@ -59,7 +59,7 @@ def get_k_b_neighbors(bwordvectors, query_vec, k):
     indices = sorted(indices, key=lambda i: sims[i], reverse=True)
     results = []
     for index in indices:
-        results.append([sims[index],bwordvectors[0][index]])
+        results.append([sims[index], bwordvectors[0][index]])
     return results
 
 
@@ -73,7 +73,7 @@ def search(term: str, search_vectors, elemental_vectors=None, semantic_vectors=N
     :param semantic_vectors:
     :param predicate_vectors:
     :param count: number of results to return.
-    :param search_type: currenlty supported: boundproduct or single_term. If single_term is specified, it is assumed that the term comes from search_vectors and searc_vectors will be searched for other terms that are similar to the given term. If boundproduct is specified, the expression will be resolved using the supplied vectors and the search_vectors will be searched for the resulting vector.
+    :param search_type: currently supported: boundproduct or single_term. If single_term is specified, it is assumed that the term comes from search_vectors and search_vectors will be searched for other terms that are similar to the given term. If boundproduct is specified, the expression will be resolved using the supplied vectors and the search_vectors will be searched for the resulting vector.
     :return: Top {count} most similar terms from search_vectors.
     """
     if search_type is not "single_term" and search_type is not "boundproduct":
@@ -181,7 +181,8 @@ def get_vector_for_token(token: str, elemental_vectors, semantic_vectors, predic
     return vectors[1][query_index]
 
 
-def get_bound_product_query_vector_from_string(query: str, elemental_vectors, semantic_vectors, predicate_vectors) -> bitarray:
+def get_bound_product_query_vector_from_string(query: str, elemental_vectors, semantic_vectors,
+                                               predicate_vectors) -> bitarray:
     """
     :param elemental_vectors:
     :param semantic_vectors:
@@ -218,19 +219,21 @@ class MalformedQueryError(ValueError):
         super().__init__("Not a valid query:", query)
 
 
-def readfile(fileName):
-    """Read in a Semantic Vectors binary (.bin) file - currently works for real vector, binary vector and permutation stores"""
+def readfile(file_name):
+    """
+    Read in a Semantic Vectors binary (.bin) file - currently works for real vector, binary vector and permutation stores
+    """
     words = []
     vectors = []
 
-    with open(fileName, mode='rb') as file:  # b is important -> binary
-        fileContent = file.read(1)
+    with open(file_name, mode='rb') as file:  # b is important -> binary
+        file_content = file.read(1)
 
         # determine length of header string (the first byte)
-        x = fileContent
+        x = file_content
         ct = int.from_bytes(x, byteorder='little', signed=False)
-        fileContent = file.read(ct)
-        header = fileContent.decode().split(" ")
+        file_content = file.read(ct)
+        header = file_content.decode().split(" ")
         vindex = header.index('-vectortype')
         vectortype = header[vindex + 1]
         dindex = header.index('-dimension')
@@ -247,34 +250,34 @@ def readfile(fileName):
         skipcount = 0
         count = 0
 
-        fileContent = file.read(1)
-        while fileContent:
-            # y = int.from_bytes(fileContent[ct:ct + 1], byteorder='little', signed=False)
+        file_content = file.read(1)
+        while file_content:
+            # y = int.from_bytes(file_content[ct:ct + 1], byteorder='little', signed=False)
 
             # Read Lucene's vInt - if the most significant bit
             # is set, read another byte as significant bits
             # ahead of the seven remaining bits of the original byte
             # Confused? - see vInt at https://lucene.apache.org/core/3_5_0/fileformats.html
 
-            y = int.from_bytes(fileContent, byteorder='little', signed=False)
+            y = int.from_bytes(file_content, byteorder='little', signed=False)
             binstring1 = format(y, "b")
             if len(binstring1) == 8:
-                fileContent = file.read(1)
-                y2 = int.from_bytes(fileContent, byteorder='little', signed=False)
+                file_content = file.read(1)
+                y2 = int.from_bytes(file_content, byteorder='little', signed=False)
                 binstring2 = format(y2, "b")
                 y = int(binstring2 + binstring1[1:], 2)
 
-            fileContent = file.read(y)
-            words.append(fileContent.decode())
-            fileContent = file.read(int(unitsize * dimension))
+            file_content = file.read(y)
+            words.append(file_content.decode())
+            file_content = file.read(int(unitsize * dimension))
 
             if vectortype == 'BINARY':
-                q=bitarray()
-                q.frombytes(fileContent)
+                q = bitarray()
+                q.frombytes(file_content)
             else:
-                q = struct.unpack(dimstring, fileContent)
+                q = struct.unpack(dimstring, file_content)
 
             vectors.append(q)
-            fileContent = file.read(1)
+            file_content = file.read(1)
 
     return (words, vectors)

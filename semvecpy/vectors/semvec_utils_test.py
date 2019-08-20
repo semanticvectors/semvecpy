@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from . import semvec_utils as semvec
+from semvecpy.vectors import semvec_utils as semvec
 
 
 class TestSemvecUtils(unittest.TestCase):
