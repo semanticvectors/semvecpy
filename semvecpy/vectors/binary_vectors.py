@@ -28,9 +28,8 @@ with high-dimensional random vectors. Cognitive Computation. 2009;1(2):139–159
 """
 
 import numpy as np
-from numpy import int8, int32,float32
+from numpy import int8, int32
 from bitarray import bitarray
-
 
 
 class BinaryVectorFactory:
@@ -41,20 +40,22 @@ class BinaryVectorFactory:
     (3) Vectors with a preset bitarray (e.g. read from disk)
     """
 
-    def generate_random_vector(self,dimension):
-        randvec=BinaryVector(dimension)
+    @staticmethod
+    def generate_random_vector(dimension):
+        randvec = BinaryVector(dimension)
         randvec.set_random_vector()
         return randvec
 
-    def generate_zero_vector(self,dimension):
-        zerovec=BinaryVector(dimension)
+    @staticmethod
+    def generate_zero_vector(dimension):
+        zerovec = BinaryVector(dimension)
         return zerovec
 
-    def generate_vector(self,incoming_bitarray):
+    @staticmethod
+    def generate_vector(incoming_bitarray):
         binaryvec = BinaryVector(len(incoming_bitarray))
         binaryvec.set(incoming_bitarray)
         return binaryvec
-
 
 
 class BinaryVector(object):
@@ -65,27 +66,29 @@ class BinaryVector(object):
 
     def __init__(self, dimension):
         self.dimension = dimension
+        self.bitset = None
+        self.voting_record = None
         self.set_zero_vector()
 
-    #set the bitset and voting record to match the incoming bit array
+    # set the bitset and voting record to match the incoming bit array
     def set(self, incoming_bitarray):
         """
         Sets the bit vector and voting record to the incoming bitarray (not a copy)
         :param incoming_bitarray: a bitarray.bitarray object
         """
-        this.bitset=incoming_bitarray
-        this.voting_record=np.zeros(self.dimension)
-        as_list = 1 * np.array(this.bitset.tolist())
-        as_list[other_list == 0] = -1
-        self.voting_record += other_list
+        self.bitset = incoming_bitarray
+        self.voting_record = np.zeros(self.dimension)
+        as_list = 1 * np.array(self.bitset.tolist())
+        as_list[incoming_bitarray == 0] = -1
+        self.voting_record += incoming_bitarray
 
     def copy(self):
         """
         :return New BinaryVector with (deep) copies of bit vector and voting record
         """
         new = BinaryVector(self.dimension)
-        new.bitset = self.bitset.copy() # replaces 0 bitset
-        new.voting_record = self.voting_record.copy() # replaces 0 voting_record
+        new.bitset = self.bitset.copy()  # replaces 0 bitset
+        new.voting_record = self.voting_record.copy()  # replaces 0 voting_record
         return new
 
     def set_random_vector(self):
@@ -103,20 +106,21 @@ class BinaryVector(object):
         """
         Sets the bit vector and voting record to zero
         """
-        self.bitset = bitarray([False]*self.dimension)
+        self.bitset = bitarray([False] * self.dimension)
         self.voting_record = np.zeros(self.dimension)
 
     def get_dimension(self):
         return self.dimension
 
-    def get_vector_type(self):
+    @staticmethod
+    def get_vector_type():
         return 'binary'
 
     def is_zero_vector(self):
         return not self.bitset.any()
 
     # Non negative overlap, normalized for dimensions
-    def measure_overlap(self,other):
+    def measure_overlap(self, other):
         """
         Measures the overlap between binary vectors as max(1 - (2.HD/d), 0)
         where d=dimensionality and HD=Hamming Distance.
@@ -124,8 +128,8 @@ class BinaryVector(object):
         :param other: another BinaryVector
         :return the non-negative normalized hamming distance (NNHD - see above)
         """
-        nhd = 1 - (2/self.dimension)*(self.bitset ^ other.bitset).count(True)
-        return np.max(nhd,0)
+        nhd = 1 - (2 / self.dimension) * (self.bitset ^ other.bitset).count(True)
+        return np.max(nhd, 0)
 
     def superpose(self, other, weight):
         """
@@ -150,38 +154,38 @@ class BinaryVector(object):
         """
         self.bitset ^= other.bitset
 
-
-    def tallyVotes(self):
+    def tally_votes(self):
         """
         Sets self bit vector (bitset) to the outcome of tallying the votes of the voting record
         (more 1s than zeros : 1, with ties split at random)
         """
-        if np.sum(np.abs(self.voting_record)) == 0: return #this shortcut only occurs after a normalization
+        if np.sum(np.abs(self.voting_record)) == 0: return  # this shortcut only occurs after a normalization
         s = np.sign(self.voting_record)
-        s[s==0] = np.random.choice(np.array([-1,1]),s[s==0.].shape[0]) #make as many random checks as their are 0s
-        s[s==-1] = 0 #set all negatives to 0
+        s[s == 0] = np.random.choice(np.array([-1, 1]),
+                                     s[s == 0.].shape[0])  # make as many random checks as their are 0s
+        s[s == -1] = 0  # set all negatives to 0
         self.bitset = bitarray(list(s.astype(bool)))
 
     def normalize(self):
         """
         Tallies votes and resets the voting record to reflect the new bitset
         """
-        self.tallyVotes()
+        self.tally_votes()
         self.voting_record = np.sign(self.voting_record)
 
 
 def main():
     vector1 = BinaryVector(2048)
     vector1.set_random_vector()
-    vector1c=vector1.copy()
+    vector1c = vector1.copy()
     vector2 = BinaryVector(2048)
 
     for i in range(10):
         vector2.set_random_vector()
-        vector1.superpose(vector2,1)
+        vector1.superpose(vector2, 1)
         if i < 100:
-            vector1.tallyVotes()
-            print(i,vector1.bitset.count(True), vector1.measure_overlap(vector1c))
+            vector1.tally_votes()
+            print(i, vector1.bitset.count(True), vector1.measure_overlap(vector1c))
 
 
 if __name__ == '__main__':
