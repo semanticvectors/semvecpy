@@ -1,9 +1,28 @@
 from unittest import TestCase
 from semvecpy.vectors import binary_vectors as bv
 import numpy as np
+import os
 
 
 class TestBinaryVectors(TestCase):
+
+
+    def test_vector_store(self):
+        # Borrowed from semvec_utils_test
+        # These few lines should enable the test setup to find the test data, wherever the test is run from.
+        this_dir = os.path.dirname(__file__)
+        semvecpy_root_dir = os.path.split(os.path.split(this_dir)[0])[0]
+        test_data_dir = os.path.join(semvecpy_root_dir, "test_data")
+        vector_store = bv.BinaryVectorStore()
+        vector_store.init_from_file(os.path.join(test_data_dir, "semanticvectors.bin"))
+        # vectors trained as follows:
+        # java -cp semanticvectors-5.9.jar pitt.search.semanticvectors.ESP -luceneindexpath predication_index -vectortype binary -dimension 64 -trainingcycles 8 -mutablepredicatevectors
+        bvec = vector_store.get_vector('south_africa')
+        self.assertEqual(bvec.get_dimension(),64)
+        nearest = vector_store.knn(bvec,5)
+        self.assertEqual(nearest[0][1], 'south_africa')
+        nearest = vector_store.knn_term('south_africa', 5)
+        self.assertEqual(nearest[0][1], 'south_africa')
 
     def test_generate_random(self):
         meancard=[]

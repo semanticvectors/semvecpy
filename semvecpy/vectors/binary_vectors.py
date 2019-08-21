@@ -30,6 +30,7 @@ with high-dimensional random vectors. Cognitive Computation. 2009;1(2):139–159
 import numpy as np
 from numpy import int8, int32
 from bitarray import bitarray
+import semvecpy.vectors.semvec_utils as svu
 
 
 class BinaryVectorFactory:
@@ -58,6 +59,80 @@ class BinaryVectorFactory:
         return binaryvec
 
 
+class BinaryVectorStore(object):
+    """
+    Storage, retrieval and nearest neighbor search of binary vectors
+    """
+    def __init__(self):
+        self.dict = {}
+        self.vectors = []
+        self.terms = []
+
+    def init_from_file(self,file_name):
+        """
+        Reads bit vectors from disk (Semantic Vectors binary format) into BinaryVector objects
+        Creates a dictionary for retrieval
+        :param filename:
+        """
+        with open(file_name, mode='rb') as file:  # b is important -> binary
+            file_content = file.read(1)
+            x = file_content
+            ct = int.from_bytes(x, byteorder='little', signed=False)
+            file_content = file.read(ct)
+            header = file_content.decode().split(" ")
+            vindex = header.index('-vectortype')
+            vectortype = header[vindex + 1]
+
+        if vectortype != 'BINARY':
+            print('Can\'t initialize binary vector store from ',vectortype,' vectors.')
+            return
+
+        #read in bitarrays and wrap in BinaryVectors
+        self.terms, incoming_bits = svu.readfile(file_name)
+        for bit_vector in incoming_bits:
+            self.vectors.append(BinaryVectorFactory.generate_vector(bit_vector))
+        self.dict=dict(zip(self.terms,self.vectors))
+
+    def get_vector(self,term):
+        """
+        Return vector representation of term, or None if not found
+        """
+        return self.dict.get(term)
+
+    def knn_term(self,term,k):
+        """
+        Returns k-nearest nieghbors of an incoming term, or None if term not found
+        :param term: term to search for
+        :param k: number of neigbhors
+        :return: list of score/term pairs
+        """
+        vec = self.dict.get(term)
+        if vec is None:
+            return None
+        return self.knn(vec,k)
+
+    def knn(self,binary_vector,k):
+        """
+        Returns k-nearest neighbors of an incoming BinaryVector
+        :param: binary_vector (BinaryVector)
+        :param: k - number of neighbors
+        :return: list of score/term pairs
+        """
+
+        sims = []
+        if k > len(self.terms):
+            k = len(self.terms)
+        for vector in self.vectors:
+            sims.append(vector.measure_overlap(binary_vector))
+
+        indices = np.argpartition(sims, -k)[-k:]
+        indices = sorted(indices, key=lambda i: sims[i], reverse=True)
+        results = []
+        for index in indices:
+            results.append([sims[index], self.terms[index]])
+        return results
+
+
 class BinaryVector(object):
     """
     BinaryVector objects include both a bit vector (bitset) and a voting record, and
@@ -66,9 +141,21 @@ class BinaryVector(object):
 
     def __init__(self, dimension):
         self.dimension = dimension
-        self.bitset = None
+        self.bitset = bitarray(dimension*[False])
         self.voting_record = None
-        self.set_zero_vector()
+
+
+    def voting_record_to_bitset(self):
+        """
+        Initializes the voting record and matches this to the current bitset. In many cases this
+        won't be necessary, as a voting record is only required for superposition, and
+        takes up 32x the RAM of the bitset.
+        """
+        self.voting_record = np.zeros(self.dimension)
+        if self.bitset.count(True) > 0:
+            as_list = 1 * np.array(self.bitset.tolist())
+            as_list[as_list == 0] = -1
+            self.voting_record = as_list
 
     def set(self, incoming_bitarray):
         """
@@ -76,10 +163,6 @@ class BinaryVector(object):
         :param incoming_bitarray: a bitarray.bitarray object
         """
         self.bitset = incoming_bitarray
-        self.voting_record = np.zeros(self.dimension)
-        as_list = 1 * np.array(self.bitset.tolist())
-        as_list[as_list == 0] = -1
-        self.voting_record = as_list
 
     def copy(self):
         """
@@ -87,7 +170,8 @@ class BinaryVector(object):
         """
         new = BinaryVector(self.dimension)
         new.bitset = self.bitset.copy()  # replaces 0 bitset
-        new.voting_record = self.voting_record.copy()  # replaces 0 voting_record
+        if self.voting_record is not None:
+            new.voting_record = self.voting_record.copy()  # replaces 0 voting_record
         return new
 
     def set_random_vector(self):
@@ -98,22 +182,22 @@ class BinaryVector(object):
         randvec = np.concatenate((np.ones(halfdimension, dtype=int8), np.zeros(halfdimension, dtype=int8)))
         np.random.shuffle(randvec)
         self.bitset = bitarray(list(randvec.astype(bool)))
-        randvec[randvec == 0] = -1
-        self.voting_record = randvec
 
     def set_zero_vector(self):
         """
-        Sets the bit vector and voting record to zero
+        Sets the bit vector to zero
         """
         self.bitset = bitarray([False] * self.dimension)
-        self.voting_record = np.zeros(self.dimension)
 
     def get_dimension(self):
+        """
+        :return: dimensionality of the vector
+        """
         return self.dimension
 
     @staticmethod
     def get_vector_type():
-        return 'binary'
+        return 'BINARY'
 
     def is_zero_vector(self):
         return not self.bitset.any()
@@ -137,6 +221,8 @@ class BinaryVector(object):
         """
         other_list = 1 * np.array(other.bitset.tolist())
         other_list[other_list == 0] = -1
+        if (self.voting_record is None): #initiliaze voting record for first superposition
+            self.voting_record_to_bitset()
         self.voting_record += other_list * weight
 
     def bind(self, other):
@@ -158,7 +244,7 @@ class BinaryVector(object):
         Sets self bit vector (bitset) to the outcome of tallying the votes of the voting record
         (more 1s than zeros : 1, with ties split at random)
         """
-        if np.sum(np.abs(self.voting_record)) == 0: return  # this shortcut only occurs after a normalization
+        if self.voting_record is None: return  # nothing to tally
         s = np.sign(self.voting_record)
         s[s == 0] = np.random.choice(np.array([-1, 1]),
                                      s[s == 0.].shape[0])  # make as many random checks as their are 0s
@@ -167,25 +253,9 @@ class BinaryVector(object):
 
     def normalize(self):
         """
-        Tallies votes and resets the voting record to reflect the new bitset
+        Tallies votes and resets the voting record to None
         """
         self.tally_votes()
-        self.voting_record = np.sign(self.voting_record)
+        self.voting_record = None
 
 
-def main():
-    vector1 = BinaryVector(2048)
-    vector1.set_random_vector()
-    vector1c = vector1.copy()
-    vector2 = BinaryVector(2048)
-
-    for i in range(10):
-        vector2.set_random_vector()
-        vector1.superpose(vector2, 1)
-        if i < 100:
-            vector1.tally_votes()
-            print(i, vector1.bitset.count(True), vector1.measure_overlap(vector1c))
-
-
-if __name__ == '__main__':
-    main()
