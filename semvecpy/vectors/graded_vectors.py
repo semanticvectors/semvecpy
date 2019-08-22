@@ -13,7 +13,7 @@ Trevor Cohen, Dominic Widdows, Manuel Wahle.
 Proceedings of the Seventh International Conference on Quantum Interaction, Leicester, UK, 2013.
 """
 import numpy as np
-import semvecpy.vectors.vector_utils as vu
+from . import vector_utils as vu
 
 
 class GradedVectorFactory:
