@@ -1,5 +1,5 @@
 from unittest import TestCase
-from semvecpy.vectors import binary_vectors as bv
+from . import binary_vectors as bv
 import numpy as np
 import os
 
