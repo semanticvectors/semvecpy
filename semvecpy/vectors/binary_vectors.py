@@ -30,7 +30,7 @@ with high-dimensional random vectors. Cognitive Computation. 2009;1(2):139–159
 import numpy as np
 from numpy import int8, int32
 from bitarray import bitarray
-import semvec_utils as svu
+from . import semvec_utils as svu
 
 
 class BinaryVectorFactory:

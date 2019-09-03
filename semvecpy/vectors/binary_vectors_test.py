@@ -1,6 +1,6 @@
 from unittest import TestCase
-import binary_vectors as bv
-import semvec_utils as sv
+from . import binary_vectors as bv
+from . import semvec_utils as sv
 import numpy as np
 import os
 
