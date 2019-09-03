@@ -1,5 +1,6 @@
 from unittest import TestCase
-from . import binary_vectors as bv
+import binary_vectors as bv
+import semvec_utils as sv
 import numpy as np
 import os
 
@@ -15,14 +16,18 @@ class TestBinaryVectors(TestCase):
         test_data_dir = os.path.join(semvecpy_root_dir, "test_data")
         vector_store = bv.BinaryVectorStore()
         vector_store.init_from_file(os.path.join(test_data_dir, "semanticvectors.bin"))
+        vector_store2 = bv.BinaryVectorStore()
+        termvecs=sv.readfile(os.path.join(test_data_dir, "semanticvectors.bin"))
+        vector_store2.init_from_lists(termvecs[0],termvecs[1])
         # vectors trained as follows:
         # java -cp semanticvectors-5.9.jar pitt.search.semanticvectors.ESP -luceneindexpath predication_index -vectortype binary -dimension 64 -trainingcycles 8 -mutablepredicatevectors
-        bvec = vector_store.get_vector('south_africa')
-        self.assertEqual(bvec.get_dimension(),64)
-        nearest = vector_store.knn(bvec,5)
-        self.assertEqual(nearest[0][1], 'south_africa')
-        nearest = vector_store.knn_term('south_africa', 5)
-        self.assertEqual(nearest[0][1], 'south_africa')
+        for vecstore in [vector_store,vector_store2]:
+            bvec = vecstore.get_vector('south_africa')
+            self.assertEqual(bvec.get_dimension(),64)
+            nearest = vecstore.knn(bvec,5)
+            self.assertEqual(nearest[0][1], 'south_africa')
+            nearest = vecstore.knn_term('south_africa', 5)
+            self.assertEqual(nearest[0][1], 'south_africa')
 
     def test_generate_random(self):
         meancard=[]

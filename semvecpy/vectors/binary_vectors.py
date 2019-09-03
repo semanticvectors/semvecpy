@@ -30,7 +30,7 @@ with high-dimensional random vectors. Cognitive Computation. 2009;1(2):139–159
 import numpy as np
 from numpy import int8, int32
 from bitarray import bitarray
-from . import semvec_utils as svu
+import semvec_utils as svu
 
 
 class BinaryVectorFactory:
@@ -67,6 +67,17 @@ class BinaryVectorStore(object):
         self.dict = {}
         self.vectors = []
         self.terms = []
+
+    def init_from_lists(self,terms,bitarrays):
+        """
+        Initializes from lists (e.g. those used by semvec_utils)
+        :param terms: list of terms
+        :param binary_vectors: list of binary vectors
+        """
+        self.terms=terms
+        for incoming_bitarray in bitarrays:
+            self.vectors.append(BinaryVectorFactory.generate_vector(incoming_bitarray))
+        self.dict = dict(zip(self.terms, self.vectors))
 
     def init_from_file(self,file_name):
         """
