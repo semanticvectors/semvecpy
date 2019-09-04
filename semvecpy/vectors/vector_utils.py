@@ -7,18 +7,26 @@ def normalize(vector):
     """
     Returns the normalized vector (same dtype) using the L2 norm (||v||2) for a vector, v.
     """
-    return vector / np.sqrt(np.dot(vector, vector))
+    return vector / np.sqrt(np.dot(vector, np.conjugate(vector)))
 
 
 def cosine_similarity(vector1, vector2):
     """
     Returns the cosine of the angle between vector1 and vector 2
     """
-    vector1 = np.array(vector1).astype(np.float64)
-    vector2 = np.array(vector2).astype(np.float64)
-    norm1 = np.sqrt(np.dot(vector1, vector1))
-    norm2 = np.sqrt(np.dot(vector2, vector2))
-    return np.dot(vector1, vector2) / (norm1*norm2)
+    vector1 = np.array(vector1)
+    vector2 = np.array(vector2)
+
+    norm1 = np.sqrt(np.dot(vector1, np.conjugate(vector1)))
+    norm2 = np.sqrt(np.dot(vector2, np.conjugate(vector2)))
+    return np.real(np.dot(vector1, np.conjugate(vector2)) / (norm1*norm2))
+
+
+def bind(vec1, vec2, field=np.float):
+    if np.issubdtype(field, np.complex128):
+        return circular_convolution_complex(vec1, vec2)
+    else:
+        return circular_convolution(vec1, vec2)
 
 
 def circular_convolution(vec1, vec2):
@@ -33,9 +41,22 @@ def circular_convolution(vec1, vec2):
     return np.real(np.fft.ifft(np.fft.fft(vec1) * np.fft.fft(vec2)))
 
 
-def create_dense_random_vector(dimension: int, seed=None):
+def circular_convolution_complex(vec1, vec2):
+    """
+    Returns a vector from complex vectors by adding their respective phase angles
+    """
+    return vec1 * vec2
+
+
+def create_dense_random_vector(dimension: int, seed=None, field=np.float):
     if seed:
         np.random.seed(seed)
+
+    if np.issubdtype(field, np.complex128):
+        real_part = np.random.uniform(low=-1, high=1, size=dimension)
+        complex_part = np.random.uniform(low=-1, high=1, size=dimension)
+        return real_part + 1j * complex_part
+
     return np.random.uniform(low=-1, high=1, size=dimension)
 
 

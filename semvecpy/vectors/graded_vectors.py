@@ -20,10 +20,10 @@ class GradedVectorFactory:
     """
     GradedVectorFactory creates vectors for proportions by interpolation between between given endpoints.
     """
-    def __init__(self, dimension: int):
+    def __init__(self, dimension: int, field=np.float):
         self.dimension = dimension
-        self.alpha_vec = vu.normalize(vu.create_dense_random_vector(dimension, seed=1))
-        self.omega_vec = vu.normalize(vu.create_dense_random_vector(dimension, seed=2))
+        self.alpha_vec = vu.normalize(vu.create_dense_random_vector(dimension, seed=1, field=field))
+        self.omega_vec = vu.normalize(vu.create_dense_random_vector(dimension, seed=2, field=field))
 
     def get_vector_for_proportion(self, proportion: float):
         """
@@ -40,9 +40,10 @@ class OrthographicVectorFactory:
 
     These vectors represent words as a sum of vectors that bind each character with its relative position in the word.
     """
-    def __init__(self, dimension):
+    def __init__(self, dimension, field=np.float):
         self.dimension = dimension
-        self.gvf = GradedVectorFactory(dimension)
+        self.field = field
+        self.gvf = GradedVectorFactory(dimension, field=field)
         self.character_vectors = {}
         self.word_vectors = {}
 
@@ -62,14 +63,17 @@ class OrthographicVectorFactory:
 
     def make_word_vector(self, word: str):
         """Makes a vector for the given word and returns the new vector."""
-        output_vector = np.zeros(self.dimension, dtype=np.float32)
+        output_vector = np.zeros(self.dimension, dtype=self.field)
         for pos in range(len(word)):
             letter = word[pos]
             hex_key = int(letter.encode().hex(), 16)
             if hex_key not in self.character_vectors:
-                self.character_vectors[hex_key] = vu.create_dense_random_vector(self.dimension, seed=hex_key)
-            output_vector += vu.circular_convolution(
-                self.gvf.get_vector_for_proportion((pos + 0.5) / (len(word))), self.character_vectors[hex_key])
+                self.character_vectors[hex_key] = vu.create_dense_random_vector(
+                    self.dimension, seed=hex_key, field=self.field)
+            output_vector += vu.bind(
+                self.gvf.get_vector_for_proportion((pos + 0.5) / (len(word))),
+                self.character_vectors[hex_key],
+                field=self.field)
         return output_vector
 
     def get_k_nearest_neighbors(self, query_word: str, k: int):

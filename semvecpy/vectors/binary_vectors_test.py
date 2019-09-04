@@ -7,7 +7,6 @@ import os
 
 class TestBinaryVectors(TestCase):
 
-
     def test_vector_store(self):
         # Borrowed from semvec_utils_test
         # These few lines should enable the test setup to find the test data, wherever the test is run from.
