@@ -12,11 +12,17 @@ class TestVectorUtils(unittest.TestCase):
 
     def test_normalize(self):
         vector = np.asarray([1, 1, 1, 1], dtype=np.float32)
-        npt.assert_allclose([0.5, 0.5, 0.5, 0.5], vu.normalize(vector).tolist(), rtol=self.tol)
+        npt.assert_allclose([0.5, 0.5, 0.5, 0.5], vu.normalize(vector), rtol=self.tol)
 
     def test_cosine_similarity(self):
         npt.assert_almost_equal(vu.cosine_similarity([1, 0], [0, 1]), 0)
         npt.assert_almost_equal(vu.cosine_similarity([1, 1], [0, 1]), math.sqrt(2)/2)
+
+    def test_cosine_similarity_complex(self):
+        npt.assert_almost_equal(vu.cosine_similarity([1j], [1j]), 1)
+        npt.assert_almost_equal(vu.cosine_similarity([1j], [1 + 1j]), math.sqrt(2)/2)
+        npt.assert_almost_equal(vu.cosine_similarity([1 + 1j, 0], [1j, 1]), 0.5)
+        npt.assert_almost_equal(vu.cosine_similarity([1, 1j], [1j, 1]), 0)
 
     def test_circular_convolution(self):
         npt.assert_allclose([1, 1], vu.circular_convolution([1, 0], [1, 1]),  rtol=self.tol)
@@ -43,3 +49,7 @@ class TestVectorUtils(unittest.TestCase):
         # Check no overflow
         nearest = vu.get_k_neighbors_from_pairs(pairs, (0.9, 0.2, 0.1), 10)
         self.assertIsNotNone(nearest)
+
+    def test_complex_normalize(self):
+        vector = np.asarray([1, 1j, -1, -1j], dtype=np.complex)
+        npt.assert_allclose([0.5, 0.5j, -0.5, -0.5j], vu.normalize(vector), rtol=self.tol)
