@@ -40,6 +40,12 @@ class TestVectorUtils(unittest.TestCase):
         vec3 = vu.create_dense_random_vector(5, seed=3)
         npt.assert_allclose([ 0.101596,  0.416296, -0.418191,  0.021655,  0.785894], vec3, rtol=self.tol)
 
+    def test_create_complex_vector(self):
+        vec = vu.create_dense_random_vector(1, seed=2, field=np.complex)
+        self.assertTrue(np.issubdtype(vec.dtype, np.complex128))
+        self.assertFalse(np.issubdtype(vec.dtype, np.float64))
+        npt.assert_almost_equal(-0.1280102 - 0.94814754j, vec[0], self.tol)
+
     def test_get_k_neighbors_from_pairs(self):
         pairs = [('x', (1, 0, 0)), ('y', (0, 1, 0)), ('z', (0, 0, 1))]
         nearest = vu.get_k_neighbors_from_pairs(pairs, (0.9, 0.2, 0.1), 2)

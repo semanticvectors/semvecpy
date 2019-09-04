@@ -55,7 +55,7 @@ def create_dense_random_vector(dimension: int, seed=None, field=np.float):
     if np.issubdtype(field, np.complex128):
         real_part = np.random.uniform(low=-1, high=1, size=dimension)
         complex_part = np.random.uniform(low=-1, high=1, size=dimension)
-        return np.array([real_part[i] + complex_part[i] * 1j for i in range(dimension)], dtype=np.complex128)
+        return real_part + 1j * complex_part
 
     return np.random.uniform(low=-1, high=1, size=dimension)
 

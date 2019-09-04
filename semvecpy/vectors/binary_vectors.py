@@ -68,6 +68,17 @@ class BinaryVectorStore(object):
         self.vectors = []
         self.terms = []
 
+    def init_from_lists(self,terms,bitarrays):
+        """
+        Initializes from lists (e.g. those used by semvec_utils)
+        :param terms: list of terms
+        :param binary_vectors: list of binary vectors
+        """
+        self.terms=terms
+        for incoming_bitarray in bitarrays:
+            self.vectors.append(BinaryVectorFactory.generate_vector(incoming_bitarray))
+        self.dict = dict(zip(self.terms, self.vectors))
+
     def init_from_file(self,file_name):
         """
         Reads bit vectors from disk (Semantic Vectors binary format) into BinaryVector objects
