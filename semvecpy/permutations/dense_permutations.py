@@ -4,8 +4,8 @@ There are some overlaps and some differences with sparse_permutations.py, we hav
 """
 import numpy as np
 
-from . import constants as c
-from ..vectors.vector_utils import normalize, cosine_similarity
+import semvecpy.permutations.constants as c
+from semvecpy.vectors.vector_utils import normalize, cosine_similarity
 
 
 def get_random_vector(dimension):
@@ -72,22 +72,22 @@ def main():
     normalized_vector1 = normalize(vector1)
     vector2 = get_random_vector(c.DIMENSION)
     normalized_vector2 = normalize(vector2)
-    print('')
-    print('Normalized or not, values should be the same (give or take a rounding error).')
-    print('For dense vectors, they should generally be around 0.5 similarity. Higher dimensions',
-          'will be more consistent.')
-    print(f"Similarity before sorting, no normalization: {cosine_similarity(vector1, vector2):.4f}")
-    print(f"Similarity before sorting, normalized: {cosine_similarity(normalized_vector1, normalized_vector2):.4f}")
-    print('\n') #prints two newlines
+    print("")
+    print("Normalized or not, values should be the same (give or take a rounding error).")
+    print("For dense vectors, they should generally be around 0.5 similarity. Higher dimensions",
+          "will be more consistent.")
+    print("Similarity before sorting, no normalization: %.4f" % cosine_similarity(vector1, vector2))
+    print("Similarity before sorting, normalized: %.4f" % cosine_similarity(normalized_vector1, normalized_vector2))
+    print("\n")
 
     perm_vector1 = permute_vector(get_sort_permutation(vector1), vector1)
     perm_vector2 = permute_vector(get_sort_permutation(vector2), vector2)
     norm_perm_vector1 = permute_vector(get_sort_permutation(normalized_vector1), normalized_vector1)
     norm_perm_vector2 = permute_vector(get_sort_permutation(normalized_vector2), normalized_vector2)
-    print('For dense vectors with a sort permutation, they are likely to be more similar after permuting.')
-    print(f"Similarity after sorting, no normalization: {cosine_similarity(perm_vector1, perm_vector2):.4f}")
-    print(f"Similarity after sorting, normalized: {cosine_similarity(norm_perm_vector1, norm_perm_vector2):.4f}")
-    print('\n')
+    print("For dense vectors with a sort permutation, they are likely to be more similar after permuting.")
+    print("Similarity after sorting, no normalization: %.4f" % cosine_similarity(perm_vector1, perm_vector2))
+    print("Similarity after sorting, normalized: %.4f" % cosine_similarity(norm_perm_vector1, norm_perm_vector2))
+    print("\n")
 
     randompermvec = get_random_permutation(c.DIMENSION)
     randompermvec2 = get_random_permutation(c.DIMENSION)
@@ -97,15 +97,15 @@ def main():
     rnorm_perm_vector2 = permute_vector(randompermvec, normalized_vector2)
     rperm2_vector2 = permute_vector(randompermvec2, vector2)
     rnorm_perm2_vector2 = permute_vector(randompermvec2, normalized_vector2)
-    print('For dense vectors with random permutations, they should still be around 0.5 similarity.')
-    print('With identical permutation, they should have the same similarity as before permutation:')
-    print(f"Similarity after sorting, no normalization: {cosine_similarity(rperm_vector1, rperm_vector2):.4f}")
-    print(f"Similarity after sorting, normalized: {cosine_similarity(rnorm_perm_vector1, rnorm_perm_vector2):.4f}")
-    print('')
-    print('And with two different permutations, we should get differing values still trending to 0.5 similarity:')
-    print(f"Similarity after sorting, no normalization: {cosine_similarity(rperm_vector1, rperm2_vector2):.4f}")
-    print(f"Similarity after sorting, normalized: {cosine_similarity(rnorm_perm_vector1, rnorm_perm2_vector2):.4f}")
-    print('')
+    print("For dense vectors with random permutations, they should still be around 0.5 similarity.")
+    print("With identical permutation, they should have the same similarity as before permutation:")
+    print("Similarity after sorting, no normalization: %.4f" % cosine_similarity(rperm_vector1, rperm_vector2))
+    print("Similarity after sorting, normalized: %.4f" % cosine_similarity(rnorm_perm_vector1, rnorm_perm_vector2))
+    print("")
+    print("And with two different permutations, we should get differing values still trending to 0.5 similarity:")
+    print("Similarity after sorting, no normalization: %.4f" % cosine_similarity(rperm_vector1, rperm2_vector2))
+    print("Similarity after sorting, normalized: %.4f" % cosine_similarity(rnorm_perm_vector1, rnorm_perm2_vector2))
+    print("")
 
 
 if __name__ == '__main__':
