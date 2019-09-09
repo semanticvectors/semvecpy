@@ -9,8 +9,10 @@ users to be aware of which parts this is.
 
 ### Installation
 
-Clone the repository, or install using `pip install git+https://github.com/semanticvectors/semvecpy`.
-TODO: It would be nice to make this just `pip install semvecpy`. See https://packaging.python.org/tutorials/packaging-projects/.
+For the most recent released version, see run `pip install semvecpy`, which installs the most recent
+deployed package from https://pypi.org/project/semvecpy/
+
+For development versions, `git clone` the repository, or install using `pip install git+https://github.com/semanticvectors/semvecpy`.
 
 ### Imports and Usage
 
@@ -59,3 +61,8 @@ go ahead. It follows that some changes may be unexpected to some authors. If
 it's a bother just sync your repository wherever you left off, feel free to fork, and we can 
 discuss how to merge things back together later. Basically DON'T WORRY.
 
+### Release and Version Numbers
+
+Small "micro" updates are encouraged, typically using the `major.minor.micro` pattern as in https://www.python.org/dev/peps/pep-0440/#final-releases.
+
+We're using odd micro numbers for development versions (merged into github), and even numbers for released versions (in PyPi.)
