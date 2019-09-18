@@ -65,3 +65,9 @@ class TestRealVectors(TestCase):
         release_overlap = vu.cosine_similarity(rasevec.vector, rasebind.vector)
         rv.RealVector.exact_convolution_inverse = False
         self.assertAlmostEqual(release_overlap,1,3)
+
+    def test_copy(self):
+        rasevec = rv.RealVectorFactory.generate_random_vector(50)
+        copyvec = rasevec.copy()
+        copy_overlap = vu.cosine_similarity(rasevec.vector,copyvec.vector)
+        self.assertAlmostEqual(copy_overlap,1,3)

@@ -23,7 +23,7 @@ with high-dimensional random vectors. Cognitive Computation. 2009;1(2):139–159
 """
 
 import numpy as np
-from numpy import int8, int32
+import copy
 from . import semvec_utils as svu
 from . import vector_utils as vu
 
@@ -170,7 +170,7 @@ class RealVector(object):
         :return New RealVector with (deep) copies of vector
         """
         new = RealVector(self.dimension)
-        new.vector = self.vector.copy()
+        new.vector = copy.copy(self.vector)
         return new
 
     def set_random_vector(self):
