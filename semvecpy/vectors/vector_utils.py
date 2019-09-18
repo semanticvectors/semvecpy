@@ -1,7 +1,7 @@
 import heapq
 from typing import Iterable, Tuple
 import numpy as np
-
+import copy
 
 def normalize(vector):
     """
@@ -40,6 +40,12 @@ def circular_convolution(vec1, vec2):
     """
     return np.real(np.fft.ifft(np.fft.fft(vec1) * np.fft.fft(vec2)))
 
+def exact_circular_correlation(vec1, vec2):
+    """
+    Returns a vector that is the circular correlation of vec1 and vec2.
+    vec1 and vec2: array-like, e.g., list of floats
+    """
+    return np.real(np.fft.ifft(np.fft.fft(vec1) / np.fft.fft(vec2)))
 
 def circular_convolution_complex(vec1, vec2):
     """
@@ -47,6 +53,11 @@ def circular_convolution_complex(vec1, vec2):
     """
     return vec1 * vec2
 
+def circular_correlation_complex(vec1, vec2):
+    """
+    Returns a vector from complex vectors by subtracting their respective phase angles
+    """
+    return vec1 / vec2
 
 def create_dense_random_vector(dimension: int, seed=None, field=np.float):
     if seed:
