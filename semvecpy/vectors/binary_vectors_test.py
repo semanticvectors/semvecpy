@@ -27,6 +27,8 @@ class TestBinaryVectors(TestCase):
             self.assertEqual(nearest[0][1], 'south_africa')
             nearest = vecstore.knn_term('south_africa', 5)
             self.assertEqual(nearest[0][1], 'south_africa')
+            nearest = vecstore.knn_term('south_africa', 5, stdev=True)
+            self.assertGreater(nearest[0][0], 4)
 
     def test_generate_random(self):
         meancard=[]

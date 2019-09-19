@@ -29,6 +29,8 @@ class TestRealVectors(TestCase):
             self.assertEqual(nearest[0][1], 'south_africa')
             nearest = vecstore.knn_term('south_africa', 5)
             self.assertEqual(nearest[0][1], 'south_africa')
+            nearest = vecstore.knn_term('south_africa', 5, stdev=True)
+            self.assertGreater(nearest[0][0],4)
 
 
 
@@ -53,11 +55,11 @@ class TestRealVectors(TestCase):
         rasebind = rasevec.copy()
         tobind  = rv.RealVectorFactory.generate_random_vector(50)
         rasebind.bind(tobind)
-        bound_overlap=vu.cosine_similarity(rasevec.vector, rasebind.vector)
-        self.assertLess(bound_overlap, .4)
+        bound_overlap = vu.cosine_similarity(rasevec.vector, rasebind.vector)
+        self.assertLess(bound_overlap, .5)
         rasebind.release(tobind)
         release_overlap = vu.cosine_similarity(rasevec.vector,rasebind.vector)
-        self.assertGreater(release_overlap,.6)
+        self.assertGreater(release_overlap,.5)
         rasebind = rasevec.copy()
         rasebind.bind(tobind)
         rv.RealVector.exact_convolution_inverse = True
@@ -71,3 +73,4 @@ class TestRealVectors(TestCase):
         copyvec = rasevec.copy()
         copy_overlap = vu.cosine_similarity(rasevec.vector,copyvec.vector)
         self.assertAlmostEqual(copy_overlap,1,3)
+

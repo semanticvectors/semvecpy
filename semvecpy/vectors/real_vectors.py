@@ -23,6 +23,7 @@ with high-dimensional random vectors. Cognitive Computation. 2009;1(2):139–159
 """
 
 import numpy as np
+from scipy.stats import zscore
 import copy
 from . import semvec_utils as svu
 from . import vector_utils as vu
@@ -113,7 +114,7 @@ class RealVectorStore(object):
         for vector in self.vectors:
             vector = vector / np.linalg.norm(vector)
 
-    def knn_term(self,term,k):
+    def knn_term(self,term,k, stdev=False):
         """
         Returns k-nearest nieghbors of an incoming term, or None if term not found
         :param term: term to search for
@@ -123,9 +124,9 @@ class RealVectorStore(object):
         real_vec = self.dict.get(term)
         if real_vec is None:
             return None
-        return self.knn(real_vec,k)
+        return self.knn(real_vec,k, stdev=stdev)
 
-    def knn(self,query_vec,k):
+    def knn(self,query_vec,k, stdev=False):
         """
         Returns k-nearest neighbors of an incoming RealVector
         :param: query_vec (RealVector)
@@ -137,6 +138,8 @@ class RealVectorStore(object):
         if k > len(self.terms):
             k = len(self.terms)
         sims = np.matmul(self.vectors, query_vec.vector)
+        if stdev:
+            sims = zscore(sims)
         indices = np.argpartition(sims, -k)[-k:]
         indices = sorted(indices, key=lambda i: sims[i], reverse=True)
         results = []

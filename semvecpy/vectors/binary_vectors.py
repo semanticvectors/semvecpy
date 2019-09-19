@@ -29,6 +29,7 @@ with high-dimensional random vectors. Cognitive Computation. 2009;1(2):139–159
 
 import numpy as np
 from numpy import int8, int32
+from scipy.stats import zscore
 from bitarray import bitarray
 from . import semvec_utils as svu
 
@@ -110,7 +111,7 @@ class BinaryVectorStore(object):
         """
         return self.dict.get(term)
 
-    def knn_term(self,term,k):
+    def knn_term(self,term,k,stdev=False):
         """
         Returns k-nearest nieghbors of an incoming term, or None if term not found
         :param term: term to search for
@@ -120,9 +121,9 @@ class BinaryVectorStore(object):
         vec = self.dict.get(term)
         if vec is None:
             return None
-        return self.knn(vec,k)
+        return self.knn(vec,k,stdev)
 
-    def knn(self,binary_vector,k):
+    def knn(self,binary_vector,k,stdev=False):
         """
         Returns k-nearest neighbors of an incoming BinaryVector
         :param: binary_vector (BinaryVector)
@@ -136,6 +137,8 @@ class BinaryVectorStore(object):
         for vector in self.vectors:
             sims.append(vector.measure_overlap(binary_vector))
 
+        if stdev:
+            sims = zscore(sims)
         indices = np.argpartition(sims, -k)[-k:]
         indices = sorted(indices, key=lambda i: sims[i], reverse=True)
         results = []
