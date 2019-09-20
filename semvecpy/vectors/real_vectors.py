@@ -111,8 +111,8 @@ class RealVectorStore(object):
         """
         Normalize all vectors in the space (todo - speed up via broadcasting)
         """
-        for vector in self.vectors:
-            vector = vector / np.linalg.norm(vector)
+        norms = np.sqrt((np.array(self.vectors) * np.array(self.vectors)).sum(axis=1))
+        self.vectors = self.vectors / norms.reshape(len(self.vectors), 1)
 
     def knn_term(self,term,k, stdev=False):
         """

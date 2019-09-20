@@ -74,3 +74,18 @@ class TestRealVectors(TestCase):
         copy_overlap = vu.cosine_similarity(rasevec.vector,copyvec.vector)
         self.assertAlmostEqual(copy_overlap,1,3)
 
+    def test_normalize_all(self):
+        counts=[]
+        vecs =[]
+        for i in range(10):
+            rasevec = rv.RealVectorFactory.generate_random_vector(50)
+            vecs.append(rasevec.vector)
+            counts.append(str(i))
+
+        vector_store = rv.RealVectorStore()
+        vector_store.init_from_lists(counts, vecs)
+        norms = np.sqrt((np.array(vector_store.vectors) * np.array(vector_store.vectors)).sum(axis=1))
+        self.assertNotAlmostEqual(np.mean(norms),1,3)
+        vector_store.normalize_all()
+        norms = np.sqrt((np.array(vector_store.vectors) * np.array(vector_store.vectors)).sum(axis=1))
+        self.assertAlmostEqual(np.mean(norms), 1, 3)
