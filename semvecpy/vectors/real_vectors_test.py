@@ -89,3 +89,4 @@ class TestRealVectors(TestCase):
         vector_store.normalize_all()
         norms = np.sqrt((np.array(vector_store.vectors) * np.array(vector_store.vectors)).sum(axis=1))
         self.assertAlmostEqual(np.mean(norms), 1, 3)
+        self.assertAlmostEqual(np.linalg.norm(vector_store.real_vectors[0].vector),1,3)

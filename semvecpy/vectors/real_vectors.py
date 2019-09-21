@@ -111,8 +111,8 @@ class RealVectorStore(object):
         """
         Normalize all vectors in the space (todo - speed up via broadcasting)
         """
-        norms = np.sqrt((np.array(self.vectors) * np.array(self.vectors)).sum(axis=1))
-        self.vectors = self.vectors / norms.reshape(len(self.vectors), 1)
+        for i, vector in enumerate(self.vectors):
+            self.vectors[i] /= np.linalg.norm(vector)
 
     def knn_term(self,term,k, stdev=False):
         """
@@ -217,7 +217,7 @@ class RealVector(object):
         Adds the incoming RealVector 'other' to the numpy array of self
         :param other: another RealVector
         """
-        self.vector = np.sum([self.vector, np.multiply(weight,other.vector)], axis = 0)
+        self.vector += np.multiply(weight,other.vector)
 
     def bind(self, other):
         """
@@ -240,7 +240,7 @@ class RealVector(object):
         """
         Tallies votes and resets the voting record to None
         """
-        self.vector = self.vector / np.linalg.norm(self.vector)
+        self.vector /= np.linalg.norm(self.vector)
 
     def involution(self):
         """
