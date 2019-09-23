@@ -55,8 +55,7 @@ class BinaryVectorFactory:
 
     @staticmethod
     def generate_vector(incoming_bitarray):
-        binaryvec = BinaryVector(len(incoming_bitarray))
-        binaryvec.set(incoming_bitarray)
+        binaryvec = BinaryVector(len(incoming_bitarray),incoming_vector=incoming_bitarray)
         return binaryvec
 
 
@@ -99,11 +98,9 @@ class BinaryVectorStore(object):
             print('Can\'t initialize binary vector store from ',vectortype,' vectors.')
             return
 
-        #read in bitarrays and wrap in BinaryVectors
         self.terms, incoming_bits = svu.readfile(file_name)
-        for bit_vector in incoming_bits:
-            self.vectors.append(BinaryVectorFactory.generate_vector(bit_vector))
-        self.dict=dict(zip(self.terms,self.vectors))
+        self.vectors = [BinaryVectorFactory.generate_vector(args) for args in incoming_bits]
+        self.dict = dict(zip(self.terms,self.vectors))
 
     def get_vector(self,term):
         """
@@ -153,9 +150,12 @@ class BinaryVector(object):
     support the fundamental Vector-symbolic Architecture (see operations of binding and superposition.
     """
 
-    def __init__(self, dimension):
+    def __init__(self, dimension, incoming_vector=None):
         self.dimension = dimension
-        self.bitset = bitarray(dimension*[False])
+        if incoming_vector is None:
+            self.bitset = bitarray(dimension*[False])
+        else:
+            self.bitset = incoming_vector
         self.voting_record = None
 
 
