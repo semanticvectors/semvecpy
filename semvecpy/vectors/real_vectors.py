@@ -39,8 +39,7 @@ class RealVectorFactory:
 
     @staticmethod
     def generate_vector(incoming_vector):
-        realvec = RealVector(len(incoming_vector))
-        realvec.set(incoming_vector)
+        realvec = RealVector(len(incoming_vector), incoming_vector)
         return realvec
 
     @staticmethod
@@ -74,8 +73,7 @@ class RealVectorStore(object):
         """
         self.terms=terms
         self.vectors=vectors
-        for incoming_vector in vectors:
-            self.real_vectors.append(RealVectorFactory.generate_vector(incoming_vector))
+        self.real_vectors = [RealVectorFactory.generate_vector(args) for args in vectors]
         self.dict = dict(zip(self.terms, self.real_vectors))
 
     def init_from_file(self,file_name):
@@ -157,9 +155,12 @@ class RealVector(object):
     #governs whether to use approximate or exact inverse of circular convolution
     exact_convolution_inverse = False;
 
-    def __init__(self, dimension):
+    def __init__(self, dimension, incoming_vector=None):
         self.dimension = dimension
-        self.vector = np.zeros(dimension)
+        if incoming_vector is None:
+            self.vector = np.zeros(dimension)
+        else:
+            self.vector = incoming_vector
 
     def set(self, incoming_vector):
         """

@@ -75,8 +75,7 @@ class BinaryVectorStore(object):
         :param binary_vectors: list of binary vectors
         """
         self.terms=terms
-        for incoming_bitarray in bitarrays:
-            self.vectors.append(BinaryVectorFactory.generate_vector(incoming_bitarray))
+        self.vectors = [BinaryVectorFactory.generate_vector(args) for args in bitarrays]
         self.dict = dict(zip(self.terms, self.vectors))
 
     def init_from_file(self,file_name):
