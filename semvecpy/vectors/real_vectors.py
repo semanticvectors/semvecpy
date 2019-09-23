@@ -71,8 +71,8 @@ class RealVectorStore(object):
         :param terms: list of terms
         :param real_vectors.py: list of real vectors
         """
-        self.terms=terms
-        self.vectors=vectors
+        self.terms = terms
+        self.vectors = vectors
         self.real_vectors = [RealVectorFactory.generate_vector(args) for args in vectors]
         self.dict = dict(zip(self.terms, self.real_vectors))
 

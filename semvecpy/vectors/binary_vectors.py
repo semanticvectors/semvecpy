@@ -130,8 +130,7 @@ class BinaryVectorStore(object):
         sims = []
         if k > len(self.terms):
             k = len(self.terms)
-        for vector in self.vectors:
-            sims.append(vector.measure_overlap(binary_vector))
+        sims = [binary_vector.measure_overlap(args) for args in self.vectors]
 
         if stdev:
             sims = zscore(sims)
