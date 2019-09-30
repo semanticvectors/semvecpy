@@ -275,7 +275,7 @@ def readfile(file_name):
                 q = bitarray()
                 q.frombytes(file_content)
             else:
-                q = struct.unpack(dimstring, file_content)
+                q = np.asarray(struct.unpack(dimstring, file_content))
 
             vectors.append(q)
             file_content = file.read(1)

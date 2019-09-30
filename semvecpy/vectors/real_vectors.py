@@ -160,7 +160,7 @@ class RealVector(object):
         if incoming_vector is None:
             self.vector = np.zeros(dimension)
         else:
-            self.vector = incoming_vector
+            self.vector = np.asarray(incoming_vector)
 
     def set(self, incoming_vector):
         """

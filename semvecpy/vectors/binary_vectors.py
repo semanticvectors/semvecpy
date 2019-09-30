@@ -165,8 +165,8 @@ class BinaryVector(object):
         """
         self.voting_record = np.zeros(self.dimension)
         if self.bitset.count(True) > 0:
-            as_list = 1 * np.array(self.bitset.tolist())
-            as_list[as_list == 0] = -1
+            as_list = np.float(1) * np.array(self.bitset.tolist())
+            as_list[as_list == 0] = np.float(-1)
             self.voting_record = as_list
 
     def set(self, incoming_bitarray):
