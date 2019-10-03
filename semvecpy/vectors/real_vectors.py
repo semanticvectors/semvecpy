@@ -44,7 +44,7 @@ class RealVectorFactory:
 
     @staticmethod
     def generate_random_vector(dimension):
-        randvec = np.random.uniform(low=-.5*dimension, high=.5*dimension, size=dimension)
+        randvec = np.random.uniform(low=-.5/dimension, high=.5/dimension, size=dimension)
         return RealVectorFactory.generate_vector(randvec)
 
     @staticmethod
