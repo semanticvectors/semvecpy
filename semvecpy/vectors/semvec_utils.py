@@ -76,13 +76,13 @@ def search(term: str, search_vectors, elemental_vectors=None, semantic_vectors=N
     :param search_type: currently supported: boundproduct or single_term. If single_term is specified, it is assumed that the term comes from search_vectors and search_vectors will be searched for other terms that are similar to the given term. If boundproduct is specified, the expression will be resolved using the supplied vectors and the search_vectors will be searched for the resulting vector.
     :return: Top {count} most similar terms from search_vectors.
     """
-    if search_type is not "single_term" and search_type is not "boundproduct":
+    if search_type != "single_term" and search_type != "boundproduct":
         raise NotImplementedError()
 
-    if search_type is "single_term":
+    if search_type == "single_term":
         return get_k_bvec_neighbors(search_vectors, term, count)
     else:
-        if search_type is "boundproduct" and (elemental_vectors is None
+        if search_type == "boundproduct" and (elemental_vectors is None
                                               or semantic_vectors is None
                                               or predicate_vectors is None):
             raise ValueError("All three vector files must be provided if search type is boundproduct")
@@ -104,7 +104,7 @@ def compare_terms_batch(terms, elemental_vectors, semantic_vectors, predicate_ve
     """
     similarities = list()
     for term in terms:
-        if term.count("|") is not 1:
+        if term.count("|") != 1:
             raise ValueError("Input must contain exactly one | character per line")
         term1, term2 = tuple(term.split("|"))
         similarities.append(compare_terms(term1, term2,
@@ -126,7 +126,7 @@ def compare_terms(term1: str, term2: str, elemental_vectors, semantic_vectors, p
     :param search_type: Search type. Currently, only boundproduct is supported.
     :return: Similarity (normalized hamming distance) between the vectors for the two terms.
     """
-    if search_type is not "boundproduct":
+    if search_type != "boundproduct":
         raise NotImplementedError()
 
     return measure_overlap(
