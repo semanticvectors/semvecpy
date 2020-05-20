@@ -298,9 +298,9 @@ class BinaryVector(object):
         rowfloor = int(np.floor(np.log2(weight))) - 1
         while 0 < rowfloor < len(self.pvr):
             weight = weight - int(np.power(2, rowfloor))
-            addfromfloor(self.cv, self.pvr, rowfloor)
+            self.addfromfloor(self.cv, self.pvr, rowfloor)
             self.cv = other.bitset.copy()
-            addfromfloor(self.cv, self.nvr, rowfloor)
+            self.addfromfloor(self.cv, self.nvr, rowfloor)
             rowfloor = int(np.floor(np.log2(weight))) - 1
 
         for q in range(weight):  # incrementally add the rest
