@@ -312,7 +312,7 @@ class BinaryVector(object):
         # ensure same length
         self.cv = self.cv ^ self.cv
         while len(self.nvr) < len(self.pvr):
-            self.nvr.append(cv.copy())
+            self.nvr.append(self.cv.copy())
         while len(self.pvr) < len(self.nvr):
             self.pvr.append(cv.copy())
 
