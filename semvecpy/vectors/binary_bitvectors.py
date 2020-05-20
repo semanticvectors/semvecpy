@@ -255,7 +255,7 @@ class BinaryVector(object):
         for i in range(rowfloor, len(vr)):
             vr[i] = vr[i] ^ cv
             cv = cv & ~vr[i]
-        if scv.count(True) > 0:
+        if cv.count(True) > 0:
             vr.append(cv)
 
     def reduce(self):
