@@ -298,10 +298,11 @@ class BinaryVector(object):
         rowfloor = int(np.floor(np.log2(weight))) - 1
         while 0 < rowfloor < len(self.pvr):
             weight = weight - int(np.power(2, (rowfloor+1)))
-            self.addfromfloor(self.cv, self.pvr, rowfloor)
-            self.cv = other.bitset.copy()
-            self.addfromfloor(self.cv, self.nvr, rowfloor)
-            rowfloor = int(np.floor(np.log2(weight))) - 1
+            if weight > 0:
+                self.addfromfloor(self.cv, self.pvr, rowfloor)
+                self.cv = other.bitset.copy()
+                self.addfromfloor(self.cv, self.nvr, rowfloor)
+                rowfloor = int(np.floor(np.log2(weight))) - 1
 
         for q in range(weight):  # incrementally add the rest
             self.addvector(self.cv, self.pvr)
