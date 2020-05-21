@@ -314,7 +314,7 @@ class BinaryVector(object):
         while len(self.nvr) < len(self.pvr):
             self.nvr.append(self.cv.copy())
         while len(self.pvr) < len(self.nvr):
-            self.pvr.append(cv.copy())
+            self.pvr.append(self.cv.copy())
 
     def bind(self, other):
         """
