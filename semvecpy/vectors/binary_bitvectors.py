@@ -291,20 +291,28 @@ class BinaryVector(object):
 
         if weight == 0:
             return
-        self.cv = other.bitset.copy()
+
+        if weight < 0:
+            other = other.copy()
+            other.invert()
+            weight = np.abs(weight)
+
 
         # decompose into powers of two, start at the highest possible level
         # e.g. if adding with a weight of eight, start in the fourth row
         rowfloor = int(np.floor(np.log2(weight)))
         while 0 < rowfloor < len(self.pvr) and weight > 0:
             weight = weight - int(np.power(2, rowfloor))
+            self.cv = other.bitset.copy()
             self.addfromfloor(self.cv, self.pvr, rowfloor)
             self.cv = other.bitset.copy()
+            self.cv.invert()
             self.addfromfloor(self.cv, self.nvr, rowfloor)
             if weight > 0:
                 rowfloor = int(np.floor(np.log2(weight)))
 
         for q in range(weight):  # incrementally add the rest
+            self.cv = other.bitset.copy()
             self.addvector(self.cv, self.pvr)
             self.cv = other.bitset.copy()
             self.cv.invert()
