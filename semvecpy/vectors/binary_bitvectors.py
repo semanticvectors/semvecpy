@@ -296,12 +296,12 @@ class BinaryVector(object):
         # decompose into powers of two, start at the highest possible level
         # e.g. if adding with a weight of eight, start in the third row
         rowfloor = int(np.floor(np.log2(weight))) - 1
-        while 0 < rowfloor < len(self.pvr):
+        while 0 < rowfloor < len(self.pvr) and weight > 0:
             weight = weight - int(np.power(2, (rowfloor+1)))
+            self.addfromfloor(self.cv, self.pvr, rowfloor)
+            self.cv = other.bitset.copy()
+            self.addfromfloor(self.cv, self.nvr, rowfloor)
             if weight > 0:
-                self.addfromfloor(self.cv, self.pvr, rowfloor)
-                self.cv = other.bitset.copy()
-                self.addfromfloor(self.cv, self.nvr, rowfloor)
                 rowfloor = int(np.floor(np.log2(weight))) - 1
 
         for q in range(weight):  # incrementally add the rest
