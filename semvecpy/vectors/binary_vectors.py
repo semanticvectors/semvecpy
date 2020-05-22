@@ -115,6 +115,13 @@ class BinaryVectorStore(object):
         self.vectors.append(vector)
         return self.dict.update({term: vector})
 
+    def normalize_all(self):
+        """
+        Normalize all vectors in the space (todo - speed up via broadcasting)
+        """
+        for vector in enumerate(self.vectors):
+            vector.normalize()
+
     def knn_term(self,term,k,stdev=False):
         """
         Returns k-nearest nieghbors of an incoming term, or None if term not found
