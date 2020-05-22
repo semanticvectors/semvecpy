@@ -119,7 +119,7 @@ class BinaryVectorStore(object):
         """
         Normalize all vectors in the space (todo - speed up via broadcasting)
         """
-        for vector in enumerate(self.vectors):
+        for vector in self.vectors:
             vector.normalize()
 
     def knn_term(self,term,k,stdev=False):
