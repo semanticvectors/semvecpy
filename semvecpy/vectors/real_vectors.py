@@ -105,6 +105,15 @@ class RealVectorStore(object):
         """
         return self.dict.get(term)
 
+    def put_vector(self, term, vector):
+        """
+        Add term and corresponding vector to the store
+        """
+        self.terms.append(term)
+        self.vectors.append(vector)
+        self.real_vectors.append(vector.vector)
+        return self.dict.update({term: vector})
+
     def normalize_all(self):
         """
         Normalize all vectors in the space (todo - speed up via broadcasting)

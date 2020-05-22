@@ -107,6 +107,14 @@ class BinaryVectorStore(object):
         """
         return self.dict.get(term)
 
+    def put_vector(self,term, vector):
+        """
+        Add term and corresponding vector to the store
+        """
+        self.terms.append(term)
+        self.vectors.append(vector)
+        return self.dict.update({term: vector})
+
     def knn_term(self,term,k,stdev=False):
         """
         Returns k-nearest nieghbors of an incoming term, or None if term not found
