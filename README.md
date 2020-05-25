@@ -29,6 +29,8 @@ array([0.6, 0.8])
 
 * Use Python 3+ throughout. 
   * Please don't try to get `print "Hello World"` working instead of `print("Hello World")`.
+* Dependencies are listed in `requirements.txt` and can be installed using `pip install -e .`.
+  * This goes through the `setup.py` file to play nice with `pip install`.
 * Imports should work relative to the project ./semvecpy directory.
   * E.g., `from semvecpy.vectors import vector_utils`, rather than just `from vectors import vector_utils`.
   * Please don't add deeper dependencies to your PYTHONPATH or set directories as sources roots in an IDE to make import
