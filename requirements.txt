@@ -1,4 +1,4 @@
-# Install using "pip install -r requirements.txt"
+# Install dependencies using "pip install -e .", which causes the setup.py file to read this file.
 
 # Add requirements in alphabetical order (to avoid duplicates and version clashes).
 # Only include a version number if it's absolutely required, and if so, document the reason.
