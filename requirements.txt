@@ -1,0 +1,10 @@
+# Install using "pip install -r requirements.txt"
+
+# Add requirements in alphabetical order (to avoid duplicates and version clashes).
+# Only include a version number if it's absolutely required, and if so, document the reason.
+
+bitarray
+numpy
+scipy
+
+# Do not add new requirements at the bottom unless they're alphabetically last!!!
