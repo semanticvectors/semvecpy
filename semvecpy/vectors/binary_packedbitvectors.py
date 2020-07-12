@@ -58,8 +58,8 @@ class BinaryVectorFactory:
         return zerovec
 
     @staticmethod
-    def generate_vector(incoming_bitarray):
-        binaryvec = BinaryVector(len(incoming_bitarray),incoming_vector=np.packbits(incoming_bitarray))
+    def generate_vector(incoming_packedbits):
+        binaryvec = BinaryVector(len(incoming_packedbits)*8,incoming_vector=incoming_packedbits)
         return binaryvec
 
 
@@ -77,15 +77,13 @@ class BinaryVectorStore(object):
 
     def init_from_lists(self,terms,bitarrays):
         """
-        Initializes from lists (e.g. those used by semvec_utils)
+        Initializes from lists (e.g. those used by semvec_utils). Bitarray retained here
+        for interoperability with other bit vector implementations.
         :param terms: list of terms
         :param binary_vectors: list of binary vectors
         """
         self.terms=terms
-        #self.vectors = [BinaryVectorFactory.generate_vector(args) for args in bitarrays]
-        p = Pool(multiprocessing.cpu_count())
-        self.vectors = p.map(BinaryVectorFactory.generate_vector, bitarrays)
-        p.close()
+        self.vectors = [BinaryVectorFactory.generate_vector(np.packbits(args)) for args in bitarrays]
         self.bitvectors = np.asarray([args.bitset for args in self.vectors],
                                      dtype=np.uint8)
 
@@ -99,6 +97,8 @@ class BinaryVectorStore(object):
         Creates a dictionary for retrieval
         :param filename:
         """
+        self.terms = []
+        self.bitvectors = []
         with open(file_name, mode='rb') as file:  # b is important -> binary
             file_content = file.read(1)
             x = file_content
@@ -107,17 +107,40 @@ class BinaryVectorStore(object):
             header = file_content.decode().split(" ")
             vindex = header.index('-vectortype')
             vectortype = header[vindex + 1]
+            dindex = header.index('-dimension')
+            dimension = int(header[dindex + 1])
+            if vectortype != 'BINARY':
+                print('Can\'t initialize binary vector store from ',vectortype,' vectors.')
+                return
 
-        if vectortype != 'BINARY':
-            print('Can\'t initialize binary vector store from ',vectortype,' vectors.')
-            return
+            unitsize = .125
+            dimstring = '>' +str(int(dimension*unitsize)) + 'B'
 
-        self.terms, incoming_bits = svu.readfile(file_name)
-        #self.vectors = [BinaryVectorFactory.generate_vector(args) for args in incoming_bits]
-        p = Pool(multiprocessing.cpu_count())
-        self.vectors = p.map(BinaryVectorFactory.generate_vector,incoming_bits)
-        p.close()
-        self.bitvectors = [args.bitset for args in self.vectors]
+            file_content = file.read(1)
+            while file_content:
+                # y = int.from_bytes(file_content[ct:ct + 1], byteorder='little', signed=False)
+
+                # Read Lucene's vInt - if the most significant bit
+                # is set, read another byte as significant bits
+                # ahead of the seven remaining bits of the original byte
+                # Confused? - see vInt at https://lucene.apache.org/core/3_5_0/fileformats.html
+
+                y = int.from_bytes(file_content, byteorder='little', signed=False)
+                binstring1 = format(y, "b")
+                if len(binstring1) == 8:
+                    file_content = file.read(1)
+                    y2 = int.from_bytes(file_content, byteorder='little', signed=False)
+                    binstring2 = format(y2, "b")
+                    y = int(binstring2 + binstring1[1:], 2)
+
+                file_content = file.read(y)
+                self.terms.append(file_content.decode())
+                file_content = file.read(int(unitsize * dimension))
+                q = np.frombuffer(file_content, np.uint8)
+                self.bitvectors.append(q)
+                file_content = file.read(1)
+
+        self.vectors = [BinaryVectorFactory.generate_vector(args) for args in self.bitvectors]
         self.bitvectors = np.asarray(self.bitvectors, dtype=np.uint8)
         self.dict = dict(zip(self.terms,self.vectors))
 
@@ -133,7 +156,10 @@ class BinaryVectorStore(object):
         """
         self.terms.append(term)
         self.vectors.append(vector)
-        return self.dict.update({term: vector})
+        #todo replace with append the new bit
+        self.bitvectors = [args.bitset for args in self.vectors]
+        self.bitvectors = np.asarray(self.bitvectors, dtype=np.uint8)
+        self.dict.update({term: vector})
 
     def normalize_all(self):
         """
@@ -225,7 +251,7 @@ class BinaryVector(object):
     def __init__(self, dimension, incoming_vector=None):
         self.dimension = dimension
         if incoming_vector is None:
-            self.bitset = np.packbits(bitarray(dimension*[False]))
+            self.bitset = np.zeros(int(dimension/8),dtype=np.uint8)
         else:
             self.bitset = incoming_vector
         self.pvr = []
@@ -271,7 +297,7 @@ class BinaryVector(object):
         halfdimension = int32(self.dimension / 2)
         randvec = np.concatenate((np.ones(halfdimension, dtype=int8), np.zeros(halfdimension, dtype=int8)))
         np.random.shuffle(randvec)
-        self.bitset = np.packbits(bitarray(list(randvec.astype(bool))))
+        self.bitset = np.packbits(list(randvec.astype(bool)))
 
     def set_zero_vector(self):
         """
@@ -423,8 +449,9 @@ class BinaryVector(object):
         if len(self.pvr) == 0:
             return  # nothing to tally
 
-        self.cv = np.packbits(bitarray('0' * len(self.pvr[0])*8))
-        self.ev = np.packbits(bitarray('1' * len(self.pvr[0])*8))
+        self.cv = np.packbits(np.zeros(len(self.pvr[0])*8).astype(bool))
+        self.ev = np.packbits(np.ones(len(self.pvr[0])*8).astype(bool))
+
 
         for i in range(0, len(self.pvr)):
             self.cv = self.cv | (self.pvr[i] & ~self.nvr[i])

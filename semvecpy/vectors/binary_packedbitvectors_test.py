@@ -15,12 +15,9 @@ class TestBinaryVectors(TestCase):
         test_data_dir = os.path.join(semvecpy_root_dir, "test_data")
         vector_store = bv.BinaryVectorStore()
         vector_store.init_from_file(os.path.join(test_data_dir, "semanticvectors.bin"))
-        vector_store2 = bv.BinaryVectorStore()
-        termvecs=sv.readfile(os.path.join(test_data_dir, "semanticvectors.bin"))
-        vector_store2.init_from_lists(termvecs[0],termvecs[1])
         # vectors trained as follows:
         # java -cp semanticvectors-5.9.jar pitt.search.semanticvectors.ESP -luceneindexpath predication_index -vectortype binary -dimension 64 -trainingcycles 8 -mutablepredicatevectors
-        for vecstore in [vector_store,vector_store2]:
+        for vecstore in [vector_store]:
             bvec = vecstore.get_vector('south_africa')
             self.assertEqual(bvec.get_dimension(),64)
             nearest = vecstore.knn(bvec,5)
