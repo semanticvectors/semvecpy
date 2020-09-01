@@ -4,6 +4,7 @@
 # Only include a version number if it's absolutely required, and if so, document the reason.
 
 bitarray
+multiprocess
 numpy
 scipy
 
