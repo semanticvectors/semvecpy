@@ -118,9 +118,13 @@ class RealVectorStore(object):
         """
         Normalize all vectors in the space (todo - speed up via broadcasting)
         """
+        #for i, vector in enumerate(self.real_vectors):
+        #    self.real_vectors[i] /= np.linalg.norm(vector)
+        self.real_vectors /= np.linalg.norm(self.real_vectors, axis=1).reshape(-1,1) 
         for i, vector in enumerate(self.vectors):
-            self.vectors[i] /= np.linalg.norm(vector)
+            vector.set(self.real_vectors[i])
 
+        
     def knn_term(self,term,k, stdev=False):
         """
         Returns k-nearest nieghbors of an incoming term, or None if term not found
