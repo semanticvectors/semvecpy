@@ -144,7 +144,7 @@ class RealVectorStore(object):
         sims = []
         if k > len(self.terms):
             k = len(self.terms)
-        sims = np.matmul(self.vectors, query_vec.vector)
+        sims = np.matmul(self.real_vectors, query_vec.vector)
         if stdev:
             sims = zscore(sims)
         indices = np.argpartition(sims, -k)[-k:]
