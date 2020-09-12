@@ -281,3 +281,34 @@ def readfile(file_name):
             file_content = file.read(1)
 
     return (words, vectors)
+
+def get_vint(i):
+    """
+    Utility function to replicate Lucene's variable length integer format
+    """
+    b = format(i,"b")
+    if (len(b) < 8):
+        b = str(0)*(8-len(b))+b
+        return bitarray(b)
+    else:
+        b2 = format(i%128,"b")
+        b2 = str(1)+str(0)*(7-len(b2))+b2
+        b3 = format(i//128,"b")
+        b3 = str(0)*(8-len(b3))+b3
+        return bitarray(b2+b3)
+
+def write_realvectors(vecstore, filename):
+    """
+        Write out real vector store in Semantic Vectors binary format
+    """
+    with open(filename, mode='wb') as file:  # b is important -> binary
+        x = '-vectortype REAL -dimension '+str(np.asarray(vecstore.vectors).shape[1])
+        file.write((len(x)).to_bytes(1,byteorder='little', signed=False))
+        file.write(x.encode())
+        for word in vecstore.dict.keys():
+            vint = get_vint(len(word))
+            file.write(vint)
+            file.write(word.encode())
+            floats = vecstore.get_vector(word).vector
+            s = struct.pack('>'+str(len(floats))+'f', *floats)
+            file.write(s)

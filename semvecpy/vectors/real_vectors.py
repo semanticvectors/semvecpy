@@ -99,6 +99,12 @@ class RealVectorStore(object):
         incoming_terms, incoming_vectors = svu.readfile(file_name)
         self.init_from_lists(incoming_terms,incoming_vectors)
 
+    def write_vectors(self, filename):
+        """
+        Write out real vector store in Semantic Vectors binary format
+        """
+        svu.write_realvectors(self,filename)
+
     def get_vector(self,term):
         """
         Return vector representation of term, or None if not found
@@ -120,9 +126,9 @@ class RealVectorStore(object):
         """
         #for i, vector in enumerate(self.real_vectors):
         #    self.real_vectors[i] /= np.linalg.norm(vector)
-        self.real_vectors /= np.linalg.norm(self.real_vectors, axis=1).reshape(-1,1) 
-        for i, vector in enumerate(self.vectors):
-            vector.set(self.real_vectors[i])
+        self.vectors /= np.linalg.norm(self.vectors, axis=1).reshape(-1,1)
+        for i, vector in enumerate(self.real_vectors):
+            vector.set(self.vectors[i])
 
         
     def knn_term(self,term,k, stdev=False):
@@ -148,7 +154,7 @@ class RealVectorStore(object):
         sims = []
         if k > len(self.terms):
             k = len(self.terms)
-        sims = np.matmul(self.real_vectors, query_vec.vector)
+        sims = np.matmul(self.vectors, query_vec.vector)
         if stdev:
             sims = zscore(sims)
         indices = np.argpartition(sims, -k)[-k:]
