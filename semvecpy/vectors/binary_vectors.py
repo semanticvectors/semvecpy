@@ -101,6 +101,13 @@ class BinaryVectorStore(object):
         self.vectors = [BinaryVectorFactory.generate_vector(args) for args in incoming_bits]
         self.dict = dict(zip(self.terms,self.vectors))
 
+    def write_vectors(self, filename):
+        """
+        Write out binary vector store in Semantic Vectors binary format
+        """
+        svu.write_bitarray_binaryvectors(self,filename)
+
+
     def get_vector(self,term):
         """
         Return vector representation of term, or None if not found

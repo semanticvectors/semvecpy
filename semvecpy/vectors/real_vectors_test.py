@@ -32,6 +32,9 @@ class TestRealVectors(TestCase):
             nearest = vecstore.knn_term('south_africa', 5, stdev=True)
             self.assertGreater(nearest[0][0],4)
 
+        vector_store.write_vectors('tempvecs.bin')
+        vector_store2.init_from_file('tempvecs.bin')
+        self.assertAlmostEqual(vector_store.get_vector('south_africa').measure_overlap(vector_store2.get_vector('south_africa')),1,3)
 
 
     def test_superpose(self):

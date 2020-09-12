@@ -144,6 +144,12 @@ class BinaryVectorStore(object):
         self.bitvectors = np.asarray(self.bitvectors, dtype=np.uint8)
         self.dict = dict(zip(self.terms,self.vectors))
 
+    def write_vectors(self, filename):
+        """
+        Write out binary vector store in Semantic Vectors binary format
+        """
+        svu.write_packed_binaryvectors(self,filename)
+
     def get_vector(self,term):
         """
         Return vector representation of term, or None if not found
