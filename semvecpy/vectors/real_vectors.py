@@ -116,8 +116,8 @@ class RealVectorStore(object):
         Add term and corresponding vector to the store
         """
         self.terms.append(term)
-        self.vectors.append(vector)
-        self.real_vectors.append(vector.vector)
+        self.vectors.append(vector.vector)
+        self.real_vectors.append(vector)
         return self.dict.update({term: vector})
 
     def normalize_all(self):

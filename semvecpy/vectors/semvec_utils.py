@@ -318,7 +318,7 @@ def write_bitarray_binaryvectors(vecstore, filename):
         Write out binary vector store in Semantic Vectors binary format
     """
     with open(filename, mode='wb') as file:  # b is important -> binary
-        x = '-vectortype BINARY -dimension ' + str(bstore.vectors[0].dimension)
+        x = '-vectortype BINARY -dimension ' + str(vecstore.vectors[0].dimension)
         file.write((len(x)).to_bytes(1, byteorder='little', signed=False))
         file.write(x.encode())
         for word in vecstore.dict.keys():
@@ -334,7 +334,7 @@ def write_packed_binaryvectors(vecstore, filename):
         Write out packed binary vector store in Semantic Vectors binary format
     """
     with open(filename, mode='wb') as file:  # b is important -> binary
-        x = '-vectortype BINARY -dimension ' + str(bstore.vectors[0].dimension)
+        x = '-vectortype BINARY -dimension ' + str(vecstore.vectors[0].dimension)
         file.write((len(x)).to_bytes(1, byteorder='little', signed=False))
         file.write(x.encode())
         for word in vecstore.dict.keys():
