@@ -304,11 +304,11 @@ def write_realvectors(vecstore, filename):
     with open(filename, mode='wb') as file:  # b is important -> binary
         x = '-vectortype REAL -dimension '+str(np.asarray(vecstore.vectors).shape[1])
         file.write((len(x)).to_bytes(1,byteorder='little', signed=False))
-        file.write(x.encode())
+        file.write(x.encode('utf-8'))
         for word in vecstore.dict.keys():
-            vint = get_vint(len(word))
+            vint = get_vint(len(word.encode('utf-8')))
             file.write(vint)
-            file.write(word.encode())
+            file.write(word.encode('utf-8'))
             floats = vecstore.get_vector(word).vector
             s = struct.pack('>'+str(len(floats))+'f', *floats)
             file.write(s)
@@ -320,11 +320,11 @@ def write_bitarray_binaryvectors(vecstore, filename):
     with open(filename, mode='wb') as file:  # b is important -> binary
         x = '-vectortype BINARY -dimension ' + str(vecstore.vectors[0].dimension)
         file.write((len(x)).to_bytes(1, byteorder='little', signed=False))
-        file.write(x.encode())
+        file.write(x.encode('utf-8'))
         for word in vecstore.dict.keys():
-            vint = get_vint(len(word))
+            vint = get_vint(len(word.encode('utf-8')))
             file.write(vint)
-            file.write(word.encode())
+            file.write(word.encode('utf-8'))
             bins = vecstore.get_vector(word).bitset
             file.write(bins)
 
@@ -336,10 +336,10 @@ def write_packed_binaryvectors(vecstore, filename):
     with open(filename, mode='wb') as file:  # b is important -> binary
         x = '-vectortype BINARY -dimension ' + str(vecstore.vectors[0].dimension)
         file.write((len(x)).to_bytes(1, byteorder='little', signed=False))
-        file.write(x.encode())
+        file.write(x.encode('utf-8'))
         for word in vecstore.dict.keys():
-            vint = get_vint(len(word))
+            vint = get_vint(len(word.encode('utf-8')))
             file.write(vint)
-            file.write(word.encode())
+            file.write(word.encode('utf-8'))
             bins = vecstore.get_vector(word).bitset
             file.write(bins)

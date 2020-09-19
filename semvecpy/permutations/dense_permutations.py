@@ -3,7 +3,7 @@
 There are some overlaps and some differences with sparse_permutations.py, we haven't attempted to unify these.
 """
 import numpy as np
-
+import random
 from semvecpy.permutations import constants as c
 from semvecpy.vectors.vector_utils import normalize, cosine_similarity
 
@@ -55,6 +55,18 @@ def inverse_permutation(permutation):
     """
     return np.argsort(permutation)
 
+
+def swap_permutation(permutation, numswaps):
+    """
+    Swap numswaps pairs of integers in the permutation
+    Input permutation should be an index vector (e.g. a permutation of
+    the integers from 0 to dimension-1 of the vector).
+    """
+    newperm = permutation.copy()
+    for x in range(numswaps):
+        a, b = random.sample(range(len(permutation)), 2)
+        newperm[a],newperm[b] = newperm[b],newperm[a]
+    return newperm
 
 def permutation_to_matrix(permutation):
     """

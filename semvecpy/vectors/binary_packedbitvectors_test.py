@@ -13,7 +13,8 @@ class TestBinaryVectors(TestCase):
         this_dir = os.path.dirname(__file__)
         semvecpy_root_dir = os.path.split(os.path.split(this_dir)[0])[0]
         test_data_dir = os.path.join(semvecpy_root_dir, "test_data")
-        vector_store = bv.BinaryVectorStore()
+        vector_store  = bv.BinaryVectorStore()
+        vector_store2 = bv.BinaryVectorStore()
         vector_store.init_from_file(os.path.join(test_data_dir, "semanticvectors.bin"))
         # vectors trained as follows:
         # java -cp semanticvectors-5.9.jar pitt.search.semanticvectors.ESP -luceneindexpath predication_index -vectortype binary -dimension 64 -trainingcycles 8 -mutablepredicatevectors

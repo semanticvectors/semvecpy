@@ -8,7 +8,7 @@ with open('requirements.txt') as fh:
     
 setuptools.setup(
     name="semvecpy",
-    version="0.1.12",
+    version="0.1.14",
     author="Semantic Vectors Authors",
     author_email="semanticvectors@googlegroups.com",
     description="Semantic Vectors work in Python",
