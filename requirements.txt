@@ -5,6 +5,7 @@
 
 bitarray
 multiprocess
+numba
 numpy
 scipy
 
