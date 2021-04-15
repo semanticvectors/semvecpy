@@ -5,7 +5,7 @@ import copy
 from typing import List
 import numpy as np
 from bitarray import bitarray
-
+import sys
 
 def getvector(wordvecs, term):
     """
@@ -343,3 +343,86 @@ def write_packed_binaryvectors(vecstore, filename):
             file.write(word.encode('utf-8'))
             bins = vecstore.get_vector(word).bitset
             file.write(bins)
+
+
+def pathfinder(q, r, dish):
+    """
+        Returns 'pruned' Pathfinder network preserving shortest paths within constraints:
+        :param q: max length of paths to consider
+        :param r: determines minkowski distance
+        :param dish: pairwise similarities between nodes, scale 0-1
+        :return: the pruned matrix
+    """
+    n = len(dish)
+    q = np.minimum(q, n - 1)
+    dis = np.zeros([n,n],dtype=np.float)
+    mindis = np.zeros([n,n],dtype=np.float)
+    changedatq = np.zeros([n,n],dtype=np.int)
+    for row in range(n):
+        for col in range(n):
+            dis[row][col] = 1 - dish[row][col]
+            mindis[row][col] = 1 - dish[row][col]
+
+    if q > n - 2:
+        topass = 1
+        #Floyd's algorithm for minimum distance
+        for ind in range(n):
+         for row in range(n):
+            for col in range(n):
+                indirect = minkowski(mindis[row][ind], mindis[ind][col], r)
+        #if (indirect < minDis[row][col]) {
+                if (mindis[row][col] - indirect) > 1e-10:
+                    mindis[row][col] = indirect
+                    changedatq[row][col] = topass
+
+        else :
+         # Dijkstra's algorithm for minimum distance
+
+            topass = 1
+            changed = True;
+            while changed and topass < q:
+
+                topass += 1
+                changed = False;
+                m = copy.copy(mindis)
+                for ind in range(n):
+                    for row in range(n):
+                        for col in range(n):
+                            indirect1 = minkowski(dis[row][ind], m[ind][col], r);
+                            indirect2 = minkowski(m[row][ind], dis[ind][col], r);
+                            indirect = np.minimum(indirect1, indirect2);
+                            #if (indirect < mindis[row][col]) - replaced with line below, correction courtesy Roger Schvaneveldt
+                            if mindis[row][col] - indirect > 1e-10:
+                                mindis[row][col] = indirect;
+                                changedatq[row][col] = topass;
+                                changed = True;
+
+    pruned = np.zeros([n,n],dtype=np.float)
+
+    for row in range(n):
+            for col in range(n):
+                if mindis[row][col] == dis[row][col]:
+                    pruned[row][col] = 1-dis[row][col]
+
+    return pruned
+
+
+def minkowski (x,y,r):
+    """
+        Returns minkowski distance between scalars x and y, parameterized by r
+        :param x:
+        :param y:
+        :param r:
+        :return: the distance
+    """
+    temp=0
+    if r == np.inf or np.minimum(x, y) == 0:
+        return np.maximum(x, y)
+    else:
+        if r == 1:
+            return x+y
+        else:
+            temp = np.power((np.power(x, r) + np.power(y, r)), (1 / r))
+            return temp
+
+

@@ -1,6 +1,6 @@
 import os
 import unittest
-
+import numpy as np
 from . import semvec_utils as semvec
 
 
@@ -114,6 +114,12 @@ class TestSemvecUtils(unittest.TestCase):
         ], result)
         self.assertListEqual(result, result2)
 
+
+    def test_pathfinder(self):
+        testfl = np.asarray([[1, 0.95, 0.24], [0.95, 1, 0.95], [0.24, 0.95, 1]])
+        ansfl  = np.asarray([[1,  0.95, 0],[0.95, 1,  0.95],[0, 0.95 ,1 ]])
+        pruned = semvec.pathfinder(8, 1, testfl);
+        np.testing.assert_almost_equal(pruned,ansfl)
 
 if __name__ == '__main__':
     unittest.main()
