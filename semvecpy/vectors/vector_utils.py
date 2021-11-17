@@ -1,7 +1,7 @@
-import heapq
-from typing import Iterable, Tuple
-import numpy as np
 import copy
+import heapq
+import numpy as np
+from typing import Iterable, Tuple
 
 
 def normalize(vector):
