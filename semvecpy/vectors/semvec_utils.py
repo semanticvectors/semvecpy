@@ -1,6 +1,8 @@
 """Some methods to work with pre-existing Semantic Vectors spaces"""
 
 import struct
+import os
+from tqdm import tqdm
 import copy
 from typing import List
 import numpy as np
@@ -226,6 +228,9 @@ def readfile(file_name):
     words = []
     vectors = []
 
+    filestats = os.stat(file_name)
+    filesize = int(filestats.st_size)
+
     with open(file_name, mode='rb') as file:  # b is important -> binary
         file_content = file.read(1)
 
@@ -249,8 +254,9 @@ def readfile(file_name):
 
         skipcount = 0
         count = 0
-
+        pbar = tqdm(total=filesize)
         file_content = file.read(1)
+
         while file_content:
             # y = int.from_bytes(file_content[ct:ct + 1], byteorder='little', signed=False)
 
@@ -268,9 +274,10 @@ def readfile(file_name):
                 y = int(binstring2 + binstring1[1:], 2)
 
             file_content = file.read(y)
+            pbar.update(y)
             words.append(file_content.decode())
             file_content = file.read(int(unitsize * dimension))
-
+            pbar.update(int(unitsize * dimension))
             if vectortype == 'BINARY':
                 q = bitarray()
                 q.frombytes(file_content)
@@ -279,7 +286,8 @@ def readfile(file_name):
 
             vectors.append(q)
             file_content = file.read(1)
-
+            pbar.update(1)
+    pbar.close()
     return (words, vectors)
 
 def get_vint(i):
@@ -433,6 +441,5 @@ def minkowski (x,y,r):
         return x+y
     else:
         return np.power((np.power(x, r) + np.power(y, r)), (1 / r))
-
 
 
