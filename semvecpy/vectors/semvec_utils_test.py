@@ -165,12 +165,12 @@ class TestSemvecUtils(unittest.TestCase):
 
 
         # fill in rest
-        xs = [np.asarray(x.split(' '), dtype=np.int) for x in rog_test]
-        xs = np.asarray(xs)
+        xs = [np.asarray(x.split(' '), dtype=int) for x in rog_test]
+        xs = np.asarray(xs,dtype=object)
         nuxs = []
         for x in xs:
             toadd = xs.shape[0] - x.shape[0]
-            nuxs.append(np.concatenate([np.asarray(x), np.zeros(toadd, dtype=np.int)]))
+            nuxs.append(np.concatenate([np.asarray(x), np.zeros(toadd, dtype=int)]))
 
         nuxs = np.asarray(nuxs)
         #make symmetric

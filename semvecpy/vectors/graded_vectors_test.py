@@ -13,7 +13,7 @@ class TestGradedVectors(TestCase):
     tol = 0.00001
 
     def test_gvf_complex_interpolation(self):
-        gvf = gv.GradedVectorFactory(1, field=np.complex)
+        gvf = gv.GradedVectorFactory(1, field=complex)
         gvf.alpha_vec = np.array([1])
         gvf.omega_vec = np.array([1j])
         ave = gvf.get_vector_for_proportion(0.5)
@@ -31,7 +31,7 @@ class TestGradedVectors(TestCase):
                     gvf.get_vector_for_proportion((i-1)/10.0), gvf.get_vector_for_proportion(0)))
 
     def test_graded_vector_factory_complex(self):
-        gvf = gv.GradedVectorFactory(100, field=np.complex)
+        gvf = gv.GradedVectorFactory(100, field=complex)
         for i in range(1, 11):
             self.assertLess(
                 np.absolute(vu.cosine_similarity(
@@ -47,7 +47,7 @@ class TestGradedVectors(TestCase):
                            cs(ovf.get_word_vector("word"), ovf.get_word_vector("word222222")))
 
     def test_orthographic_vector_factory_similarities_complex(self):
-        ovf = gv.OrthographicVectorFactory(100, field=np.complex)
+        ovf = gv.OrthographicVectorFactory(100, field=complex)
         self.assertGreater(cs(ovf.get_word_vector("word"), ovf.get_word_vector("word")),
                            cs(ovf.get_word_vector("word"), ovf.get_word_vector("word2")))
         self.assertGreater(cs(ovf.get_word_vector("word"), ovf.get_word_vector("word2")),

@@ -364,9 +364,9 @@ def pathfinder(q, r, dish, cosines=True):
     n = len(dish)
 
     q = np.minimum(q, n - 1)
-    dis = np.zeros([n,n],dtype=np.float)
-    mindis = np.zeros([n,n],dtype=np.float)
-    changedatq = np.zeros([n,n],dtype=np.int)
+    dis = np.zeros([n,n],dtype=float)
+    mindis = np.zeros([n,n],dtype=float)
+    changedatq = np.zeros([n,n],dtype=int)
 
     for row in range(n):
         for col in range(n):
@@ -413,7 +413,7 @@ def pathfinder(q, r, dish, cosines=True):
                             changedatq[row][col] = topass
                             changed = True
 
-    pruned = np.zeros([n,n],dtype=np.float)
+    pruned = np.zeros([n,n],dtype=float)
 
     for row in range(n):
         for col in range(n):

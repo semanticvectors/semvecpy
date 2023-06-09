@@ -20,7 +20,7 @@ class GradedVectorFactory:
     """
     GradedVectorFactory creates vectors for proportions by interpolation between between given endpoints.
     """
-    def __init__(self, dimension: int, field=np.float):
+    def __init__(self, dimension: int, field=float):
         self.dimension = dimension
         self.alpha_vec = vu.normalize(vu.create_dense_random_vector(dimension, seed=1, field=field))
         self.omega_vec = vu.normalize(vu.create_dense_random_vector(dimension, seed=2, field=field))
@@ -40,7 +40,7 @@ class OrthographicVectorFactory:
 
     These vectors represent words as a sum of vectors that bind each character with its relative position in the word.
     """
-    def __init__(self, dimension, field=np.float):
+    def __init__(self, dimension, field=float):
         self.dimension = dimension
         self.field = field
         self.gvf = GradedVectorFactory(dimension, field=field)
