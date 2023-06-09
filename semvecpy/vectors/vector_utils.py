@@ -23,7 +23,7 @@ def cosine_similarity(vector1, vector2):
     return np.real(np.dot(vector1, np.conjugate(vector2)) / (norm1*norm2))
 
 
-def bind(vec1, vec2, field=np.float):
+def bind(vec1, vec2, field=float):
     if np.issubdtype(field, np.complex128):
         return circular_convolution_complex(vec1, vec2)
     else:
@@ -60,7 +60,7 @@ def circular_correlation_complex(vec1, vec2):
     """
     return vec1 / vec2
 
-def create_dense_random_vector(dimension: int, seed=None, field=np.float):
+def create_dense_random_vector(dimension: int, seed=None, field=float):
     if seed:
         np.random.seed(seed)
 
