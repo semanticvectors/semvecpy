@@ -2,7 +2,7 @@
 
 import struct
 import os
-from tqdm import tqdm
+from tqdm.auto import tqdm
 import copy
 from typing import List
 import numpy as np
